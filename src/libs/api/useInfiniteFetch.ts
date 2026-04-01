@@ -7,11 +7,6 @@ import {
 } from "@tanstack/react-query";
 import { fetcher } from "./fetch";
 
-export interface NamedAPIResource {
-  name: string;
-  url: string;
-}
-
 export interface PaginatedResponse<TItem> {
   count: number;
   next: string | null;
