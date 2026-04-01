@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { SafeAreaView } from "@/components/ui/safe-area-view";
-import { Text } from "@/components/ui/text";
 import React from "react";
 import { ScrollView, View } from "react-native";
-import { RefreshCwIcon, WifiOffIcon } from "../ui/icons";
+import { Button } from "../../forms";
+import { RefreshCwIcon, WifiOffIcon } from "../../utils/icons";
+import { SafeAreaView } from "../safe-area-view";
+import { Text } from "../text";
 
 interface NetworkErrorProps {
   onRetry?: () => void;

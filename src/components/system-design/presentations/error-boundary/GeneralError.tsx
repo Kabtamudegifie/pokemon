@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { SafeAreaView } from "@/components/ui/safe-area-view";
-import { Text } from "@/components/ui/text";
 import { router } from "expo-router";
 import React from "react";
 import { ScrollView, View } from "react-native";
-import { AlertCircleIcon, HomeIcon } from "../ui/icons";
+import { Button } from "../../forms";
+import { AlertCircleIcon, HomeIcon } from "../../utils/icons";
+import { SafeAreaView } from "../safe-area-view";
+import { Text } from "../text";
 
 interface GeneralErrorProps {
   title?: string;
@@ -22,7 +22,7 @@ export function GeneralError({
   retryText = "Try Again",
 }: GeneralErrorProps) {
   const handleGoHome = () => {
-    router.replace("/");
+    router.replace("..");
   };
 
   return (

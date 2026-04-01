@@ -1,8 +1,8 @@
+import { cn } from "@/utils/cn.util";
+import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { Text as RNText, type TextProps as RNTextProps } from "react-native";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "./utils/cn";
-import { TextClassContext } from "./utils/text-context";
+import { TextClassContext } from "../../utils/text-context";
 
 const textVariants = cva("text-base text-foreground", {
   variants: {
@@ -32,7 +32,7 @@ interface TextProps extends RNTextProps, VariantProps<typeof textVariants> {}
 const Text = React.forwardRef<React.ElementRef<typeof RNText>, TextProps>(
   ({ className, variant, ...props }, ref) => {
     const textClass = React.useContext(TextClassContext);
-    
+
     return (
       <RNText
         className={cn(textVariants({ variant }), textClass, className)}
@@ -40,7 +40,7 @@ const Text = React.forwardRef<React.ElementRef<typeof RNText>, TextProps>(
         {...props}
       />
     );
-  }
+  },
 );
 Text.displayName = "Text";
 

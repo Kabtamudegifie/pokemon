@@ -53,13 +53,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       "WRITE_CONTACTS",
     ],
   },
-  web: {
-    bundler: "metro",
-    output: "static",
-    favicon: "./assets/images/favicon.png",
-  },
+
   plugins: [
-    "expo-router",
+    ["expo-router", { root: "./src/app" }],
     [
       "expo-splash-screen",
       {

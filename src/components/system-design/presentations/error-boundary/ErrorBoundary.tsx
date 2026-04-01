@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { SafeAreaView } from "@/components/ui/safe-area-view";
-import { Text } from "@/components/ui/text";
 import { router } from "expo-router";
 import React, { Component, ReactNode } from "react";
 import { Pressable, ScrollView, View } from "react-native";
-import { AlertCircleIcon, HomeIcon, RefreshCwIcon } from "../ui/icons";
+import { Button } from "../../forms";
+import { AlertCircleIcon, HomeIcon, RefreshCwIcon } from "../../utils";
+import { SafeAreaView } from "../safe-area-view";
+import { Text } from "../text";
 
 interface Props {
   children: ReactNode;
@@ -38,12 +38,12 @@ export class ErrorBoundary extends Component<Props, State> {
 
   handleReload = () => {
     this.resetError();
-    router.replace("/");
+    router.replace("..");
   };
 
   handleGoHome = () => {
     this.resetError();
-    router.replace("/");
+    router.replace("..");
   };
 
   render() {

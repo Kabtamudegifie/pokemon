@@ -1,6 +1,7 @@
+import { Button } from "@/components/system-design/forms";
+import { SafeAreaView, Text } from "@/components/system-design/presentations";
 import { Link, Stack } from "expo-router";
 import { View } from "react-native";
-import { Text, Button, SafeAreaView } from "@/components/ui";
 
 export default function NotFoundScreen() {
   return (
@@ -8,8 +9,12 @@ export default function NotFoundScreen() {
       <Stack.Screen options={{ title: "Oops!" }} />
       <SafeAreaView className="flex-1 bg-background">
         <View className="flex-1 items-center justify-center p-5">
-          <Text variant="h1" className="mb-4">404</Text>
-          <Text variant="h3" className="mb-2">Page not found</Text>
+          <Text variant="h1" className="mb-4">
+            404
+          </Text>
+          <Text variant="h3" className="mb-2">
+            Page not found
+          </Text>
           <Text variant="muted" className="text-center mb-8">
             This screen does not exist.
           </Text>
