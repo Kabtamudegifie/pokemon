@@ -1,4 +1,4 @@
-import { Button } from "@/components/system-design/forms";
+import { AppButton } from "@/components/system-design/forms";
 import { SafeAreaView } from "@/components/system-design/presentations";
 import { AppPrimitive } from "@/components/system-design/presentations/primitives";
 import { Link, Stack } from "expo-router";
@@ -22,11 +22,11 @@ export function NotFound() {
           </AppPrimitive>
 
           <Link href="/" asChild>
-            <Button variant="default">
+            <AppButton>
               <AppPrimitive as="text" className="font-bold text-white">
                 Go to home screen
               </AppPrimitive>
-            </Button>
+            </AppButton>
           </Link>
         </AppPrimitive>
       </SafeAreaView>

@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { Text } from "react-native-paper";
 
-// Map Tailwind 'className' to the 'style' prop for both components
 cssInterop(Text, { className: "style" });
 cssInterop(View, { className: "style" });
 
@@ -41,7 +40,6 @@ export const AppPrimitive = ({
     );
   }
 
-  // Use standard View instead of Surface to prevent default theme backgrounds/shadows
   return (
     <View {...(props as any)} style={props.style as StyleProp<ViewStyle>}>
       {children}

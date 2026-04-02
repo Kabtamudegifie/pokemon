@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import React from "react";
 import { ScrollView } from "react-native";
-import { Button } from "../../forms";
+import { AppButton } from "../../forms";
 import { AlertCircleIcon, HomeIcon } from "../../utils/icons";
 import { AppPrimitive } from "../primitives";
 import { SafeAreaView } from "../safe-area-view";
@@ -50,17 +50,16 @@ export function GeneralError({
 
           <AppPrimitive className="gap-3 w-full max-w-xs">
             {onRetry && (
-              <Button onPress={onRetry} size="lg" className="w-full">
+              <AppButton onPress={onRetry} size="lg" className="w-full">
                 <AppPrimitive as="text" className="font-bold text-white">
                   {retryText}
                 </AppPrimitive>
-              </Button>
+              </AppButton>
             )}
 
             {showHomeButton && (
-              <Button
+              <AppButton
                 onPress={handleGoHome}
-                variant={onRetry ? "outline" : "default"}
                 size="lg"
                 className="w-full flex-row items-center justify-center"
               >
@@ -68,7 +67,7 @@ export function GeneralError({
                 <AppPrimitive as="text" className="font-bold">
                   Go to Home
                 </AppPrimitive>
-              </Button>
+              </AppButton>
             )}
           </AppPrimitive>
         </AppPrimitive>

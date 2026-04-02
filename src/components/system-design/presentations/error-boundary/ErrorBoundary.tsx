@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import React, { Component, ReactNode } from "react";
 import { Pressable, ScrollView } from "react-native";
-import { Button } from "../../forms";
+import { AppButton } from "../../forms";
 import { AlertCircleIcon, HomeIcon, RefreshCwIcon } from "../../utils";
 import { AppPrimitive } from "../primitives";
 import { SafeAreaView } from "../safe-area-view";
@@ -77,7 +77,7 @@ export class ErrorBoundary extends Component<Props, State> {
               </AppPrimitive>
 
               <AppPrimitive className="gap-3 w-full max-w-xs">
-                <Button
+                <AppButton
                   onPress={this.handleReload}
                   size="lg"
                   className="w-full flex-row items-center justify-center"
@@ -86,11 +86,10 @@ export class ErrorBoundary extends Component<Props, State> {
                   <AppPrimitive as="text" className="text-white font-bold">
                     Reload App
                   </AppPrimitive>
-                </Button>
+                </AppButton>
 
-                <Button
+                <AppButton
                   onPress={this.handleGoHome}
-                  variant="outline"
                   size="lg"
                   className="w-full flex-row items-center justify-center"
                 >
@@ -98,7 +97,7 @@ export class ErrorBoundary extends Component<Props, State> {
                   <AppPrimitive as="text" className="font-bold">
                     Go to Home
                   </AppPrimitive>
-                </Button>
+                </AppButton>
               </AppPrimitive>
 
               {__DEV__ && this.state.error && (

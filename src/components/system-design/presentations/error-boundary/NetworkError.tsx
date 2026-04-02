@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView } from "react-native";
-import { Button } from "../../forms";
+import { AppButton } from "../../forms";
 import { RefreshCwIcon, WifiOffIcon } from "../../utils/icons";
 import { AppPrimitive } from "../primitives";
 import { SafeAreaView } from "../safe-area-view";
@@ -36,7 +36,7 @@ export function NetworkError({ onRetry, message }: NetworkErrorProps) {
           </AppPrimitive>
 
           {onRetry && (
-            <Button
+            <AppButton
               onPress={onRetry}
               size="lg"
               className="w-full max-w-xs flex-row items-center justify-center"
@@ -45,7 +45,7 @@ export function NetworkError({ onRetry, message }: NetworkErrorProps) {
               <AppPrimitive as="text" className="font-bold text-white">
                 Try Again
               </AppPrimitive>
-            </Button>
+            </AppButton>
           )}
 
           <AppPrimitive className="mt-12 p-4 bg-muted rounded-lg w-full max-w-xs">
