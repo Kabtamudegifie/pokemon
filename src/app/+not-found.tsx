@@ -1,5 +1,5 @@
 import { NotFound } from "@/components/modules";
 
-export function NotFoundScreen() {
+export default function NotFoundScreen() {
   return <NotFound />;
 }

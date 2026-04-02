@@ -11,7 +11,7 @@ import { PokemonHeader } from "./components/PokemonHeader";
 import { PokemonMovesModal } from "./components/PokemonMovesModal";
 import { PokemonMovesPreview } from "./components/PokemonMovesPreview";
 import { PokemonPhysicalInfo } from "./components/PokemonPhysicalInfo";
-import { PokemonStats } from "./components/PokemonStats";
+import { PokemonStats } from "./components/pokemon-stats";
 
 export function PokemonDetail() {
   const { name: pokemonId } = useLocalSearchParams<{ name: string }>();
