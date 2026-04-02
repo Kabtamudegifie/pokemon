@@ -1,10 +1,10 @@
 import { router } from "expo-router";
 import React, { Component, ReactNode } from "react";
-import { Pressable, ScrollView, View } from "react-native";
+import { Pressable, ScrollView } from "react-native";
 import { Button } from "../../forms";
 import { AlertCircleIcon, HomeIcon, RefreshCwIcon } from "../../utils";
+import { AppPrimitive } from "../primitives";
 import { SafeAreaView } from "../safe-area-view";
-import { Text } from "../text";
 
 interface Props {
   children: ReactNode;
@@ -38,12 +38,12 @@ export class ErrorBoundary extends Component<Props, State> {
 
   handleReload = () => {
     this.resetError();
-    router.replace("..");
+    router.replace("/");
   };
 
   handleGoHome = () => {
     this.resetError();
-    router.replace("..");
+    router.replace("/");
   };
 
   render() {
@@ -58,61 +58,74 @@ export class ErrorBoundary extends Component<Props, State> {
             contentContainerClassName="flex-1 p-6"
             showsVerticalScrollIndicator={false}
           >
-            <View className="flex-1 items-center justify-center">
+            <AppPrimitive className="flex-1 items-center justify-center">
               <AlertCircleIcon className="w-20 h-20 text-destructive mb-6" />
 
-              <Text variant="h2" className="text-center mb-4">
+              <AppPrimitive
+                as="text"
+                className="text-2xl font-bold text-center mb-4"
+              >
                 Oops! Something went wrong
-              </Text>
+              </AppPrimitive>
 
-              <Text
-                variant="p"
+              <AppPrimitive
+                as="text"
                 className="text-center text-muted-foreground mb-8 max-w-xs"
               >
                 We encountered an unexpected error. Don&apos;t worry, you can
                 try reloading the app or go back to home.
-              </Text>
+              </AppPrimitive>
 
-              <View className="gap-3 w-full max-w-xs">
+              <AppPrimitive className="gap-3 w-full max-w-xs">
                 <Button
                   onPress={this.handleReload}
                   size="lg"
-                  className="w-full"
+                  className="w-full flex-row items-center justify-center"
                 >
                   <RefreshCwIcon className="w-4 h-4 mr-2" />
-                  <Text>Reload App</Text>
+                  <AppPrimitive as="text" className="text-white font-bold">
+                    Reload App
+                  </AppPrimitive>
                 </Button>
 
                 <Button
                   onPress={this.handleGoHome}
                   variant="outline"
                   size="lg"
-                  className="w-full"
+                  className="w-full flex-row items-center justify-center"
                 >
                   <HomeIcon className="w-4 h-4 mr-2" />
-                  <Text>Go to Home</Text>
+                  <AppPrimitive as="text" className="font-bold">
+                    Go to Home
+                  </AppPrimitive>
                 </Button>
-              </View>
+              </AppPrimitive>
 
               {__DEV__ && this.state.error && (
                 <Pressable className="mt-8 p-4 bg-muted rounded-lg w-full max-w-sm">
-                  <Text variant="small" className="font-semibold mb-2">
+                  <AppPrimitive
+                    as="text"
+                    className="font-semibold mb-2 text-sm"
+                  >
                     Error Details (Dev Only):
-                  </Text>
-                  <Text variant="code" className="text-xs text-destructive">
+                  </AppPrimitive>
+                  <AppPrimitive
+                    as="text"
+                    className="text-xs text-destructive font-mono"
+                  >
                     {this.state.error.message}
-                  </Text>
+                  </AppPrimitive>
                   {this.state.errorInfo && (
-                    <Text
-                      variant="code"
-                      className="text-xs text-muted-foreground mt-2"
+                    <AppPrimitive
+                      as="text"
+                      className="text-xs text-muted-foreground mt-2 font-mono"
                     >
                       {this.state.errorInfo.componentStack?.slice(0, 200)}...
-                    </Text>
+                    </AppPrimitive>
                   )}
                 </Pressable>
               )}
-            </View>
+            </AppPrimitive>
           </ScrollView>
         </SafeAreaView>
       );

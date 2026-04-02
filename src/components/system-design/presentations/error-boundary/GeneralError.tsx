@@ -1,10 +1,10 @@
 import { router } from "expo-router";
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView } from "react-native";
 import { Button } from "../../forms";
 import { AlertCircleIcon, HomeIcon } from "../../utils/icons";
+import { AppPrimitive } from "../primitives";
 import { SafeAreaView } from "../safe-area-view";
-import { Text } from "../text";
 
 interface GeneralErrorProps {
   title?: string;
@@ -22,7 +22,7 @@ export function GeneralError({
   retryText = "Try Again",
 }: GeneralErrorProps) {
   const handleGoHome = () => {
-    router.replace("..");
+    router.replace("/");
   };
 
   return (
@@ -31,24 +31,29 @@ export function GeneralError({
         contentContainerClassName="flex-1 p-6"
         showsVerticalScrollIndicator={false}
       >
-        <View className="flex-1 items-center justify-center">
+        <AppPrimitive className="flex-1 items-center justify-center">
           <AlertCircleIcon className="w-20 h-20 text-muted-foreground mb-6" />
 
-          <Text variant="h2" className="text-center mb-4">
+          <AppPrimitive
+            as="text"
+            className="text-2xl font-bold text-center mb-4"
+          >
             {title}
-          </Text>
+          </AppPrimitive>
 
-          <Text
-            variant="p"
+          <AppPrimitive
+            as="text"
             className="text-center text-muted-foreground mb-8 max-w-xs"
           >
             {message}
-          </Text>
+          </AppPrimitive>
 
-          <View className="gap-3 w-full max-w-xs">
+          <AppPrimitive className="gap-3 w-full max-w-xs">
             {onRetry && (
               <Button onPress={onRetry} size="lg" className="w-full">
-                <Text>{retryText}</Text>
+                <AppPrimitive as="text" className="font-bold text-white">
+                  {retryText}
+                </AppPrimitive>
               </Button>
             )}
 
@@ -57,14 +62,16 @@ export function GeneralError({
                 onPress={handleGoHome}
                 variant={onRetry ? "outline" : "default"}
                 size="lg"
-                className="w-full"
+                className="w-full flex-row items-center justify-center"
               >
                 <HomeIcon className="w-4 h-4 mr-2" />
-                <Text>Go to Home</Text>
+                <AppPrimitive as="text" className="font-bold">
+                  Go to Home
+                </AppPrimitive>
               </Button>
             )}
-          </View>
-        </View>
+          </AppPrimitive>
+        </AppPrimitive>
       </ScrollView>
     </SafeAreaView>
   );

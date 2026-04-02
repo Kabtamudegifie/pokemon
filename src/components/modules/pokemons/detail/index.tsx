@@ -1,18 +1,19 @@
 import { SafeAreaView } from "@/components/system-design/presentations";
+import { AppPrimitive } from "@/components/system-design/presentations/primitives";
 import { Colors } from "@/constants/Colors";
 import { Config } from "@/constants/Configs";
 import { Pokemon } from "@/data/models";
 import { useFetch } from "@/libs/api/useFetch";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, ScrollView } from "react-native";
 import { PokemonHeader } from "./components/PokemonHeader";
 import { PokemonMovesModal } from "./components/PokemonMovesModal";
 import { PokemonMovesPreview } from "./components/PokemonMovesPreview";
 import { PokemonPhysicalInfo } from "./components/PokemonPhysicalInfo";
 import { PokemonStats } from "./components/PokemonStats";
 
-export default function PokemonDetail() {
+export function PokemonDetail() {
   const { name: pokemonId } = useLocalSearchParams<{ name: string }>();
   const [visible, setVisible] = useState(false);
 
@@ -23,23 +24,25 @@ export default function PokemonDetail() {
 
   if (isLoading) {
     return (
-      <View
+      <AppPrimitive
         className="flex-1 justify-center items-center"
         style={{ backgroundColor: Colors.light.background }}
       >
         <ActivityIndicator size="large" color={Colors.light.primary} />
-      </View>
+      </AppPrimitive>
     );
   }
 
   if (error || !data) {
     return (
-      <View
+      <AppPrimitive
         className="flex-1 justify-center items-center"
         style={{ backgroundColor: Colors.light.background }}
       >
-        <Text className="text-red-500 text-lg">Failed to load Pokémon</Text>
-      </View>
+        <AppPrimitive as="text" className="text-red-500 text-lg">
+          Failed to load Pokémon
+        </AppPrimitive>
+      </AppPrimitive>
     );
   }
 
@@ -58,7 +61,7 @@ export default function PokemonDetail() {
           paddingBottom: 40,
         }}
       >
-        <View
+        <AppPrimitive
           className="w-full flex-col gap-4"
           style={{ backgroundColor: Colors.light.background }}
         >
@@ -72,7 +75,7 @@ export default function PokemonDetail() {
             onDismiss={() => setVisible(false)}
             data={data}
           />
-        </View>
+        </AppPrimitive>
       </ScrollView>
     </SafeAreaView>
   );

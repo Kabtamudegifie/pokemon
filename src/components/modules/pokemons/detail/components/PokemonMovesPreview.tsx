@@ -1,50 +1,55 @@
+import { AppPrimitive } from "@/components/system-design/presentations/primitives";
 import { Colors } from "@/constants/Colors";
 import { Pokemon } from "@/data/models";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-
-type PokemonMovesPreviewProps = {
-  data: Pokemon;
-  onSeeAll: () => void;
-};
+import { TouchableOpacity } from "react-native";
 
 export function PokemonMovesPreview({
   data,
   onSeeAll,
-}: PokemonMovesPreviewProps) {
+}: {
+  data: Pokemon;
+  onSeeAll: () => void;
+}) {
   const previewMoves = data.moves.slice(0, 6);
   const totalMoves = data.moves.length;
 
   return (
-    <View
+    <AppPrimitive
       style={{
         backgroundColor: Colors.light.surface,
         borderColor: Colors.light.border,
       }}
       className="rounded-3xl p-6 mb-10 shadow-xl border"
     >
-      <View className="flex-row justify-between items-center mb-5">
-        <Text
+      <AppPrimitive className="flex-row justify-between items-center mb-5">
+        <AppPrimitive
+          as="text"
           style={{ color: Colors.light.text }}
           className="text-xl font-bold"
         >
           Moves
-        </Text>
-        <Text className="text-gray-500 text-xs">{totalMoves} total</Text>
-      </View>
+        </AppPrimitive>
+        <AppPrimitive as="text" className="text-gray-500 text-xs">
+          {totalMoves} total
+        </AppPrimitive>
+      </AppPrimitive>
 
-      <View className="flex-row flex-wrap gap-3 mb-6">
+      <AppPrimitive className="flex-row flex-wrap gap-3 mb-6">
         {previewMoves.map((move, index) => (
-          <View
+          <AppPrimitive
             key={index}
             className="bg-gray-100 px-5 py-3 rounded-2xl border border-gray-200"
           >
-            <Text className="text-gray-700 capitalize text-sm font-medium">
+            <AppPrimitive
+              as="text"
+              className="text-gray-700 capitalize text-sm font-medium"
+            >
               {move.move.name.replace(/-/g, " ")}
-            </Text>
-          </View>
+            </AppPrimitive>
+          </AppPrimitive>
         ))}
-      </View>
+      </AppPrimitive>
 
       {totalMoves > 6 && (
         <TouchableOpacity
@@ -52,11 +57,14 @@ export function PokemonMovesPreview({
           style={{ backgroundColor: Colors.light.primary }}
           className="py-4 rounded-2xl active:opacity-90"
         >
-          <Text className="text-white font-bold text-center text-base">
+          <AppPrimitive
+            as="text"
+            className="text-white font-bold text-center text-base"
+          >
             See All {totalMoves} Moves
-          </Text>
+          </AppPrimitive>
         </TouchableOpacity>
       )}
-    </View>
+    </AppPrimitive>
   );
 }

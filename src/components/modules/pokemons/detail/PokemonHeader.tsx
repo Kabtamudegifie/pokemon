@@ -1,8 +1,9 @@
+import { AppPrimitive } from "@/components/system-design/presentations/primitives";
 import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function PokemonHeader() {
@@ -12,8 +13,9 @@ export default function PokemonHeader() {
   const CONTENT_HEIGHT = 64;
   const HEADER_TOTAL_HEIGHT = CONTENT_HEIGHT + insets.top;
   const HORIZONTAL_PADDING = 24;
+
   return (
-    <View
+    <AppPrimitive
       className="relative overflow-hidden flex-row items-center"
       style={{
         backgroundColor: Colors.light.primary,
@@ -30,7 +32,7 @@ export default function PokemonHeader() {
         <Ionicons name="arrow-back" size={28} color="white" />
       </TouchableOpacity>
 
-      <View
+      <AppPrimitive
         className="absolute justify-center"
         style={{
           right: HORIZONTAL_PADDING,
@@ -44,7 +46,7 @@ export default function PokemonHeader() {
           style={{ transform: [{ rotate: "-20deg" }] }}
           resizeMode="contain"
         />
-      </View>
-    </View>
+      </AppPrimitive>
+    </AppPrimitive>
   );
 }

@@ -1,4 +1,4 @@
-import Pokemons from "@/components/modules/pokemons";
+import { Pokemons } from "@/components/modules/pokemons";
 
 import React from "react";
 

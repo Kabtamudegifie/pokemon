@@ -1,12 +1,13 @@
 import { AppButton } from "@/components/system-design/forms/Button";
 import { AppTextInput } from "@/components/system-design/forms/TextInput";
+import { AppPrimitive } from "@/components/system-design/presentations/primitives";
 import { SearchIcon } from "@/components/system-design/utils";
 import { Config } from "@/constants/Configs";
 import { NamedAPIResource } from "@/data/models";
 import { useFetch } from "@/libs/api/useFetch";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
 export function PokemonSearchBar() {
   const router = useRouter();
@@ -22,7 +23,6 @@ export function PokemonSearchBar() {
   const onSearchHandler = async () => {
     const name = searchName.toLowerCase().trim();
     if (!name) return;
-
     try {
       const { data } = await checkPokemon();
       if (data) {
@@ -36,10 +36,10 @@ export function PokemonSearchBar() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.iconContainer}>
+    <AppPrimitive style={styles.container}>
+      <AppPrimitive style={styles.iconContainer}>
         <SearchIcon size={20} className="text-gray-400" />
-      </View>
+      </AppPrimitive>
 
       <AppTextInput
         placeholder="Eg. Pikachu"
@@ -58,7 +58,7 @@ export function PokemonSearchBar() {
       >
         GO
       </AppButton>
-    </View>
+    </AppPrimitive>
   );
 }
 
@@ -71,26 +71,7 @@ const styles = StyleSheet.create({
     height: 44,
     paddingLeft: 12,
     paddingRight: 6,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
     elevation: 3,
   },
-  iconContainer: {
-    marginRight: 6,
-  },
-  input: {
-    flex: 1,
-    backgroundColor: "white",
-    height: 44,
-  },
-  inputContent: {
-    fontSize: 14,
-    paddingLeft: 4,
-  },
-  searchButton: {
-    height: 32,
-    borderRadius: 999,
-  },
+  iconContainer: { marginRight: 6 },
 });

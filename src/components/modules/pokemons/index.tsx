@@ -1,3 +1,4 @@
+import { AppPrimitive } from "@/components/system-design/presentations/primitives";
 import { Colors } from "@/constants/Colors";
 import { Config } from "@/constants/Configs";
 import { Layout } from "@/constants/Layout";
@@ -9,16 +10,10 @@ import {
 import { FlashList } from "@shopify/flash-list";
 import { useRouter } from "expo-router";
 import React, { useCallback } from "react";
-import {
-  ActivityIndicator,
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ActivityIndicator, Image, TouchableOpacity } from "react-native";
 import { PokemonSearchBar } from "./components/search";
 
-export default function Pokemons() {
+export function Pokemons() {
   const router = useRouter();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteFetch<PaginatedResponse<NamedAPIResource>>(
@@ -49,17 +44,21 @@ export default function Pokemons() {
           }}
           className="rounded-[24px] p-4 mb-4 shadow-sm shadow-black/5 items-center mx-2"
         >
-          <View className="flex-row justify-between w-full mb-1">
-            <Text
+          <AppPrimitive className="flex-row justify-between w-full mb-1">
+            <AppPrimitive
+              as="text"
               style={{ color: Colors.light.primary }}
               className="font-bold text-[11px] capitalize"
             >
               {item.name}
-            </Text>
-            <Text className="text-gray-300 font-bold text-[10px]">
+            </AppPrimitive>
+            <AppPrimitive
+              as="text"
+              className="text-gray-300 font-bold text-[10px]"
+            >
               #{id?.padStart(3, "0")}
-            </Text>
-          </View>
+            </AppPrimitive>
+          </AppPrimitive>
 
           <Image
             source={{ uri: imageUrl }}
@@ -67,14 +66,24 @@ export default function Pokemons() {
             resizeMode="contain"
           />
 
-          <View className="flex-row mt-2 w-full justify-start">
-            <View className="bg-[#78C850] px-2 py-0.5 rounded-md mr-1">
-              <Text className="text-white text-[8px] font-bold">Grass</Text>
-            </View>
-            <View className="bg-[#A040A0] px-2 py-0.5 rounded-md">
-              <Text className="text-white text-[8px] font-bold">Poison</Text>
-            </View>
-          </View>
+          <AppPrimitive className="flex-row mt-2 w-full justify-start">
+            <AppPrimitive className="bg-[#78C850] px-2 py-0.5 rounded-md mr-1">
+              <AppPrimitive
+                as="text"
+                className="text-white text-[8px] font-bold"
+              >
+                Grass
+              </AppPrimitive>
+            </AppPrimitive>
+            <AppPrimitive className="bg-[#A040A0] px-2 py-0.5 rounded-md">
+              <AppPrimitive
+                as="text"
+                className="text-white text-[8px] font-bold"
+              >
+                Poison
+              </AppPrimitive>
+            </AppPrimitive>
+          </AppPrimitive>
         </TouchableOpacity>
       );
     },
@@ -92,32 +101,35 @@ export default function Pokemons() {
   }
 
   return (
-    <View
+    <AppPrimitive
       className="flex-1"
       style={{ backgroundColor: Colors.light.background }}
     >
-      <View
+      <AppPrimitive
         style={{ backgroundColor: Colors.light.primary }}
         className="pt-16 pb-10 px-8 rounded-b-[40px] z-10"
       >
-        <View className="flex-row justify-between items-start mb-6">
-          <Text className="text-white text-3xl font-bold leading-tight">
+        <AppPrimitive className="flex-row justify-between items-start mb-6">
+          <AppPrimitive
+            as="text"
+            className="text-white text-3xl font-bold leading-tight"
+          >
             Who are you{"\n"}looking for?
-          </Text>
+          </AppPrimitive>
 
-          <View className="w-24 h-24 bg-white/10 rounded-full absolute -right-6 -top-4">
+          <AppPrimitive className="w-24 h-24 bg-white/10 rounded-full absolute -right-6 -top-4">
             <Image
               source={require("../../../../assets/images/icon.png")}
               className="w-24 h-24 rounded-full"
               resizeMode="contain"
             />
-          </View>
-        </View>
+          </AppPrimitive>
+        </AppPrimitive>
 
         <PokemonSearchBar />
-      </View>
+      </AppPrimitive>
 
-      <View className="flex-1 px-2 -mt-4">
+      <AppPrimitive className="flex-1 px-2 -mt-4">
         <FlashList<NamedAPIResource>
           data={allPokemons}
           renderItem={renderItem}
@@ -137,7 +149,7 @@ export default function Pokemons() {
             ) : null
           }
         />
-      </View>
-    </View>
+      </AppPrimitive>
+    </AppPrimitive>
   );
 }
