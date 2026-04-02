@@ -1,13 +1,12 @@
 import { AppButton } from "@/components/system-design/forms/Button";
+import { AppTextInput } from "@/components/system-design/forms/TextInput";
 import { SearchIcon } from "@/components/system-design/utils";
-import { Colors } from "@/constants/Colors";
 import { Config } from "@/constants/Configs";
 import { NamedAPIResource } from "@/data/models";
 import { useFetch } from "@/libs/api/useFetch";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { TextInput } from "react-native-paper";
 
 export function PokemonSearchBar() {
   const router = useRouter();
@@ -42,19 +41,12 @@ export function PokemonSearchBar() {
         <SearchIcon size={20} className="text-gray-400" />
       </View>
 
-      <TextInput
+      <AppTextInput
         placeholder="Eg. Pikachu"
         value={searchName}
         onChangeText={setSearchName}
         onSubmitEditing={onSearchHandler}
-        mode="outlined"
-        dense
-        selectionColor={Colors.light.text}
-        cursorColor={Colors.light.text}
-        activeOutlineColor="transparent"
-        outlineStyle={{ borderRadius: 999, borderWidth: 0 }}
-        style={styles.input}
-        contentStyle={styles.inputContent}
+        size="sm"
       />
 
       <AppButton
