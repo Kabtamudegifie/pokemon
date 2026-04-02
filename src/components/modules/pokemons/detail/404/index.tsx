@@ -26,7 +26,7 @@ export default function PokemonNotFound() {
           style={{ backgroundColor: Colors.light.surface, elevation: 4 }}
         >
           <Image
-            source={require("../../../../../../assets/images/icon.png")}
+            source={require("@/assets/images/icon.png")}
             className="w-24 h-24 opacity-20"
             style={{ transform: [{ rotate: "15deg" }] }}
             resizeMode="contain"

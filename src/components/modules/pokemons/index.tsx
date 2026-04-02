@@ -119,7 +119,7 @@ export function Pokemons() {
 
           <AppPrimitive className="w-24 h-24 bg-white/10 rounded-full absolute -right-6 -top-4">
             <Image
-              source={require("../../../../assets/images/icon.png")}
+              source={require("@/assets/images/icon.png")}
               className="w-24 h-24 rounded-full"
               resizeMode="contain"
             />
