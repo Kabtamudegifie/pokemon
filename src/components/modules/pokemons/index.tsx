@@ -2,16 +2,18 @@ import { AppPrimitive } from "@/components/system-design/presentations/primitive
 import { Colors } from "@/constants/Colors";
 import { Config } from "@/constants/Configs";
 import { NamedAPIResource } from "@/data/models";
+import useIsLandscape from "@/hooks/useIsLandscape";
 import { PaginatedResponse, useInfiniteFetch } from "@/libs";
 import { FlashList } from "@shopify/flash-list";
 import React, { useCallback, useMemo } from "react";
-import { ActivityIndicator, Image, useWindowDimensions } from "react-native";
+import { ActivityIndicator, Image } from "react-native";
 import { PokemonSearchBar } from "./components/search";
 import { PokemonCard } from "./components/search/PokemonCard";
 
 export function Pokemons() {
-  const { width } = useWindowDimensions();
-  const numColumns = width > 600 ? 4 : 2;
+  const { isLandscape } = useIsLandscape();
+
+  const numColumns = isLandscape ? 4 : 2;
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteFetch<PaginatedResponse<NamedAPIResource>>(
@@ -52,7 +54,7 @@ export function Pokemons() {
             as="text"
             className="text-white text-3xl font-bold leading-tight"
           >
-            Who are you{"\n"}looking for?
+            {`Who are you${!isLandscape ? "\n" : ""}looking for?`}
           </AppPrimitive>
 
           <Image

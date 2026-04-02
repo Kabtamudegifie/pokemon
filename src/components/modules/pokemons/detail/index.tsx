@@ -5,10 +5,11 @@ import DetailScreenDataLoading from "@/components/ui/loading/DetailScreenDataLoa
 import { Colors } from "@/constants/Colors";
 import { Config } from "@/constants/Configs";
 import { Pokemon } from "@/data/models";
+import useIsLandscape from "@/hooks/useIsLandscape";
 import { useFetch } from "@/libs";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
-import { ScrollView, useWindowDimensions } from "react-native";
+import { ScrollView } from "react-native";
 import { PokemonHeader } from "./components/PokemonHeader";
 import { PokemonMovesModal } from "./components/PokemonMovesModal";
 import { PokemonMovesPreview } from "./components/PokemonMovesPreview";
@@ -16,8 +17,7 @@ import { PokemonPhysicalInfo } from "./components/PokemonPhysicalInfo";
 import { PokemonStats } from "./components/pokemon-stats";
 
 export function PokemonDetail() {
-  const { width } = useWindowDimensions();
-  const isLandscape = width > 600;
+  const { isLandscape } = useIsLandscape();
 
   const { name: pokemonId } = useLocalSearchParams<{ name: string }>();
   const [visible, setVisible] = useState(false);
