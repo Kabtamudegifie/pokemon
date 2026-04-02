@@ -42,7 +42,7 @@ export function Pokemons() {
     >
       <AppPrimitive
         style={{ backgroundColor: Colors.light.primary }}
-        className="pt-16 pb-10 px-8 rounded-b-[40px] z-10"
+        className="pt-16 pb-10 px-8 rounded-b-[40px] z-10 overflow-hidden"
       >
         <AppPrimitive className="flex-row justify-between items-start mb-6">
           <AppPrimitive
@@ -52,13 +52,11 @@ export function Pokemons() {
             Who are you{"\n"}looking for?
           </AppPrimitive>
 
-          <AppPrimitive className="w-24 h-24 bg-white/10 rounded-full absolute -right-6 -top-4">
-            <Image
-              source={require("@/assets/images/icon.png")}
-              className="w-24 h-24 rounded-full"
-              resizeMode="contain"
-            />
-          </AppPrimitive>
+          <Image
+            source={require("@/assets/images/icon.png")}
+            className="w-36 h-36 opacity-30  absolute -right-20 -top-24"
+            resizeMode="contain"
+          />
         </AppPrimitive>
 
         <PokemonSearchBar />

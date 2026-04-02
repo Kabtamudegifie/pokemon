@@ -10,7 +10,7 @@ export default function PokemonHeader() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
-  const CONTENT_HEIGHT = 64;
+  const CONTENT_HEIGHT = 70;
   const HEADER_TOTAL_HEIGHT = CONTENT_HEIGHT + insets.top;
   const HORIZONTAL_PADDING = 24;
 
@@ -19,7 +19,7 @@ export default function PokemonHeader() {
       className="relative overflow-hidden flex-row items-center"
       style={{
         backgroundColor: Colors.light.primary,
-        paddingTop: insets.top,
+        paddingTop: insets.top - 10,
         height: HEADER_TOTAL_HEIGHT,
         paddingHorizontal: HORIZONTAL_PADDING,
       }}
@@ -42,7 +42,7 @@ export default function PokemonHeader() {
       >
         <Image
           source={require("@/assets/images/icon.png")}
-          className="w-12 h-12 opacity-30 rounded-full"
+          className="w-28 h-28 -top-8 absolute -right-2 opacity-30 rounded-full"
           style={{ transform: [{ rotate: "-20deg" }] }}
           resizeMode="contain"
         />
