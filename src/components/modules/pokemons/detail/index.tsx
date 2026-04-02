@@ -1,12 +1,14 @@
 import { SafeAreaView } from "@/components/system-design/presentations";
 import { AppPrimitive } from "@/components/system-design/presentations/primitives";
+import LoadingError from "@/components/ui/error-boundary/LoadingError";
+import DetailScreenDataLoading from "@/components/ui/loading/DetailScreenDataLoading";
 import { Colors } from "@/constants/Colors";
 import { Config } from "@/constants/Configs";
 import { Pokemon } from "@/data/models";
 import { useFetch } from "@/libs/api/useFetch";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
-import { ActivityIndicator, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import { PokemonHeader } from "./components/PokemonHeader";
 import { PokemonMovesModal } from "./components/PokemonMovesModal";
 import { PokemonMovesPreview } from "./components/PokemonMovesPreview";
@@ -23,27 +25,11 @@ export function PokemonDetail() {
   );
 
   if (isLoading) {
-    return (
-      <AppPrimitive
-        className="flex-1 justify-center items-center"
-        style={{ backgroundColor: Colors.light.background }}
-      >
-        <ActivityIndicator size="large" color={Colors.light.primary} />
-      </AppPrimitive>
-    );
+    return <DetailScreenDataLoading />;
   }
 
   if (error || !data) {
-    return (
-      <AppPrimitive
-        className="flex-1 justify-center items-center"
-        style={{ backgroundColor: Colors.light.background }}
-      >
-        <AppPrimitive as="text" className="text-red-500 text-lg">
-          Failed to load Pokémon
-        </AppPrimitive>
-      </AppPrimitive>
-    );
+    return <LoadingError error="Failed to load Pokemon." />;
   }
 
   return (

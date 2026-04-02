@@ -1,10 +1,10 @@
 import { router } from "expo-router";
 import React from "react";
 import { ScrollView } from "react-native";
-import { AppButton } from "../../forms";
-import { AlertCircleIcon, HomeIcon } from "../../utils/icons";
-import { AppPrimitive } from "../primitives";
-import { SafeAreaView } from "../safe-area-view";
+import { AppButton } from "../../system-design/forms";
+import { AppPrimitive } from "../../system-design/presentations/primitives";
+import { SafeAreaView } from "../../system-design/presentations/safe-area-view";
+import { AlertCircleIcon, HomeIcon } from "../../system-design/utils/icons";
 
 interface GeneralErrorProps {
   title?: string;

@@ -1,10 +1,14 @@
 import { router } from "expo-router";
 import React, { Component, ReactNode } from "react";
 import { Pressable, ScrollView } from "react-native";
-import { AppButton } from "../../forms";
-import { AlertCircleIcon, HomeIcon, RefreshCwIcon } from "../../utils";
-import { AppPrimitive } from "../primitives";
-import { SafeAreaView } from "../safe-area-view";
+import { AppButton } from "../../system-design/forms";
+import { AppPrimitive } from "../../system-design/presentations/primitives";
+import { SafeAreaView } from "../../system-design/presentations/safe-area-view";
+import {
+  AlertCircleIcon,
+  HomeIcon,
+  RefreshCwIcon,
+} from "../../system-design/utils";
 
 interface Props {
   children: ReactNode;
