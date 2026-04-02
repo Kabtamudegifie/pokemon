@@ -1,5 +1,6 @@
 import {
   AlertCircle,
+  ArrowLeft,
   ArrowUpDown,
   Bell,
   Check,
@@ -7,6 +8,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronUp,
+  HelpCircle,
   Home,
   Menu,
   RefreshCw,
@@ -19,6 +21,7 @@ import {
 import { iconWithClassName } from "./icon-with-classname";
 
 export const AlertCircleIcon = iconWithClassName(AlertCircle);
+export const ArrowLeftIcon = iconWithClassName(ArrowLeft);
 export const ArrowUpDownIcon = iconWithClassName(ArrowUpDown);
 export const BellIcon = iconWithClassName(Bell);
 export const CheckIcon = iconWithClassName(Check);
@@ -26,6 +29,7 @@ export const ChevronDownIcon = iconWithClassName(ChevronDown);
 export const ChevronLeftIcon = iconWithClassName(ChevronLeft);
 export const ChevronRightIcon = iconWithClassName(ChevronRight);
 export const ChevronUpIcon = iconWithClassName(ChevronUp);
+export const HelpCircleIcon = iconWithClassName(HelpCircle);
 export const HomeIcon = iconWithClassName(Home);
 export const MenuIcon = iconWithClassName(Menu);
 export const RefreshCwIcon = iconWithClassName(RefreshCw);
