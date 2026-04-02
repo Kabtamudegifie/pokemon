@@ -5,11 +5,14 @@ import { NamedAPIResource } from "@/data/models";
 import { PaginatedResponse, useInfiniteFetch } from "@/libs";
 import { FlashList } from "@shopify/flash-list";
 import React, { useCallback, useMemo } from "react";
-import { ActivityIndicator, Image } from "react-native";
+import { ActivityIndicator, Image, useWindowDimensions } from "react-native";
 import { PokemonSearchBar } from "./components/search";
 import { PokemonCard } from "./components/search/PokemonCard";
 
 export function Pokemons() {
+  const { width } = useWindowDimensions();
+  const numColumns = width > 600 ? 4 : 2;
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteFetch<PaginatedResponse<NamedAPIResource>>(
       ["pokemon-list"],
@@ -54,7 +57,7 @@ export function Pokemons() {
 
           <Image
             source={require("@/assets/images/icon.png")}
-            className="w-36 h-36 opacity-30  absolute -right-20 -top-24"
+            className="w-36 h-36 opacity-30 absolute -right-20 -top-24"
             resizeMode="contain"
           />
         </AppPrimitive>
@@ -64,10 +67,11 @@ export function Pokemons() {
 
       <AppPrimitive className="flex-1 px-2 -mt-6">
         <FlashList<NamedAPIResource>
+          key={numColumns}
           data={allPokemons}
           renderItem={renderItem}
           keyExtractor={(item) => item.name}
-          numColumns={2}
+          numColumns={numColumns}
           onEndReached={() =>
             hasNextPage && !isFetchingNextPage && fetchNextPage()
           }
