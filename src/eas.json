@@ -23,9 +23,6 @@
       "extends": "base",
       "distribution": "internal",
       "channel": "development",
-      "env": {
-        "APP_ENV": "development"
-      },
       "android": {
         "buildType": "apk"
       }
@@ -35,9 +32,6 @@
       "extends": "base",
       "distribution": "internal",
       "channel": "staging",
-      "env": {
-        "APP_ENV": "staging"
-      },
       "android": {
         "buildType": "apk"
       }
@@ -47,9 +41,6 @@
       "extends": "base",
       "channel": "production",
       "autoIncrement": true,
-      "env": {
-        "APP_ENV": "production"
-      },
       "android": {
         "buildType": "app-bundle"
       }
