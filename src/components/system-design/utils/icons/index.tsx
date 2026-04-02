@@ -10,6 +10,7 @@ import {
   Home,
   Menu,
   RefreshCw,
+  Search,
   Settings,
   User,
   WifiOff,
@@ -32,3 +33,4 @@ export const SettingsIcon = iconWithClassName(Settings);
 export const UserIcon = iconWithClassName(User);
 export const WifiOffIcon = iconWithClassName(WifiOff);
 export const XIcon = iconWithClassName(X);
+export const SearchIcon = iconWithClassName(Search);
