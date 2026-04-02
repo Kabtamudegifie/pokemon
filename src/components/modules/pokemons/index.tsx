@@ -1,18 +1,15 @@
 import { AppPrimitive } from "@/components/system-design/presentations/primitives";
 import { Colors } from "@/constants/Colors";
 import { Config } from "@/constants/Configs";
-import { Layout } from "@/constants/Layout";
 import { NamedAPIResource } from "@/data/models";
-
 import { PaginatedResponse, useInfiniteFetch } from "@/libs";
 import { FlashList } from "@shopify/flash-list";
-import { useRouter } from "expo-router";
-import React, { useCallback } from "react";
-import { ActivityIndicator, Image, TouchableOpacity } from "react-native";
+import React, { useCallback, useMemo } from "react";
+import { ActivityIndicator, Image } from "react-native";
 import { PokemonSearchBar } from "./components/search";
+import { PokemonCard } from "./components/search/PokemonCard";
 
 export function Pokemons() {
-  const router = useRouter();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteFetch<PaginatedResponse<NamedAPIResource>>(
       ["pokemon-list"],
@@ -20,81 +17,21 @@ export function Pokemons() {
       { limit: Config.api.paginationLimit },
     );
 
-  const allPokemons = data?.pages.flatMap((page) => page.results) ?? [];
+  const allPokemons = useMemo(
+    () => data?.pages.flatMap((page) => page.results) ?? [],
+    [data],
+  );
 
   const renderItem = useCallback(
-    ({ item }: { item: NamedAPIResource }) => {
-      const id = item.url.split("/").filter(Boolean).pop();
-      const imageUrl = `${Config.links.artworkBaseUrl}/${id}.png`;
-
-      return (
-        <TouchableOpacity
-          onPress={() =>
-            router.push({
-              pathname: "/PokemonDetail",
-              params: { name: item.name },
-            })
-          }
-          activeOpacity={0.9}
-          style={{
-            width: Layout.grid.itemWidth,
-            backgroundColor: Colors.light.surface,
-          }}
-          className="rounded-[24px] p-4 mb-4 shadow-sm shadow-black/5 items-center mx-2"
-        >
-          <AppPrimitive className="flex-row justify-between w-full mb-1">
-            <AppPrimitive
-              as="text"
-              style={{ color: Colors.light.primary }}
-              className="font-bold text-[11px] capitalize"
-            >
-              {item.name}
-            </AppPrimitive>
-            <AppPrimitive
-              as="text"
-              className="text-gray-300 font-bold text-[10px]"
-            >
-              #{id?.padStart(3, "0")}
-            </AppPrimitive>
-          </AppPrimitive>
-
-          <Image
-            source={{ uri: imageUrl }}
-            className="w-20 h-20 my-2"
-            resizeMode="contain"
-          />
-
-          <AppPrimitive className="flex-row mt-2 w-full justify-start">
-            <AppPrimitive className="bg-[#78C850] px-2 py-0.5 rounded-md mr-1">
-              <AppPrimitive
-                as="text"
-                className="text-white text-[8px] font-bold"
-              >
-                Grass
-              </AppPrimitive>
-            </AppPrimitive>
-            <AppPrimitive className="bg-[#A040A0] px-2 py-0.5 rounded-md">
-              <AppPrimitive
-                as="text"
-                className="text-white text-[8px] font-bold"
-              >
-                Poison
-              </AppPrimitive>
-            </AppPrimitive>
-          </AppPrimitive>
-        </TouchableOpacity>
-      );
-    },
-    [router],
+    ({ item }: { item: NamedAPIResource }) => <PokemonCard item={item} />,
+    [],
   );
 
   if (isLoading) {
     return (
-      <ActivityIndicator
-        size="large"
-        className="flex-1"
-        color={Colors.light.primary}
-      />
+      <AppPrimitive className="flex-1 items-center justify-center">
+        <ActivityIndicator size="large" color={Colors.light.primary} />
+      </AppPrimitive>
     );
   }
 
@@ -127,7 +64,7 @@ export function Pokemons() {
         <PokemonSearchBar />
       </AppPrimitive>
 
-      <AppPrimitive className="flex-1 px-2 -mt-4">
+      <AppPrimitive className="flex-1 px-2 -mt-6">
         <FlashList<NamedAPIResource>
           data={allPokemons}
           renderItem={renderItem}
@@ -137,12 +74,16 @@ export function Pokemons() {
             hasNextPage && !isFetchingNextPage && fetchNextPage()
           }
           onEndReachedThreshold={0.5}
-          contentContainerStyle={{ paddingTop: 24, paddingBottom: 40 }}
+          contentContainerStyle={{
+            paddingTop: 32,
+            paddingBottom: 40,
+            paddingHorizontal: 8,
+          }}
           ListFooterComponent={
             isFetchingNextPage ? (
               <ActivityIndicator
                 color={Colors.light.primary}
-                className="my-4"
+                className="my-8"
               />
             ) : null
           }
