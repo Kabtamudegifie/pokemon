@@ -1,0 +1,67 @@
+{
+  "cli": {
+    "version": ">= 4.1.2",
+    "appVersionSource": "remote"
+  },
+
+  "build": {
+    "base": {
+      "node": "20.15.0",
+      "env": {
+        "EXPO_USE_FAST_RESOLVER": "1"
+      },
+      "android": {
+        "image": "latest",
+        "resourceClass": "medium"
+      },
+      "ios": {
+        "resourceClass": "m-medium"
+      }
+    },
+
+    "development": {
+      "extends": "base",
+      "distribution": "internal",
+      "channel": "development",
+      "env": {
+        "APP_ENV": "development"
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    },
+
+    "staging": {
+      "extends": "base",
+      "distribution": "internal",
+      "channel": "staging",
+      "env": {
+        "APP_ENV": "staging"
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    },
+
+    "production": {
+      "extends": "base",
+      "channel": "production",
+      "autoIncrement": true,
+      "env": {
+        "APP_ENV": "production"
+      },
+      "android": {
+        "buildType": "app-bundle"
+      }
+    }
+  },
+
+  "submit": {
+    "production": {
+      "android": {
+        "track": "production",
+        "applicationId": "com.kd.pokemon"
+      }
+    }
+  }
+}
