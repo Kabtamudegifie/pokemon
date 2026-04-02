@@ -6,7 +6,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   name: "Pokemon",
   slug: "pokemon",
   version: "0.1.0",
-  orientation: "portrait",
+  orientation: "default",
   icon: "./assets/images/icon.png",
   scheme: "Pokemon",
   userInterfaceStyle: "automatic",

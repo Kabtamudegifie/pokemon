@@ -12,6 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
     "moduleResolution": "bundler",
     "paths": {
       "@/*": ["src/*"],
