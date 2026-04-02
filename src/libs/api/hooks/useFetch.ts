@@ -1,5 +1,5 @@
 import { QueryKey, useQuery, UseQueryOptions } from "@tanstack/react-query";
-import { fetcher } from "./fetch";
+import { fetcher } from "../utils/fetch.util";
 
 export function useFetch<TData>(
   key: QueryKey,

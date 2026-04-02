@@ -1,22 +1,11 @@
-// useInfiniteFetch.ts
 import {
   InfiniteData,
   QueryKey,
   useInfiniteQuery,
   UseInfiniteQueryOptions,
 } from "@tanstack/react-query";
-import { fetcher } from "./fetch";
-
-export interface PaginatedResponse<TItem> {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: TItem[];
-}
-
-interface InfiniteFetchParams {
-  [key: string]: string | number;
-}
+import { InfiniteFetchParams, PaginatedResponse } from "../types";
+import { fetcher } from "../utils/fetch.util";
 
 export function useInfiniteFetch<TData extends PaginatedResponse<unknown>>(
   key: QueryKey,

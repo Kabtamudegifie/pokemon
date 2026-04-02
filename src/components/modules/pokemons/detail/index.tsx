@@ -5,7 +5,7 @@ import DetailScreenDataLoading from "@/components/ui/loading/DetailScreenDataLoa
 import { Colors } from "@/constants/Colors";
 import { Config } from "@/constants/Configs";
 import { Pokemon } from "@/data/models";
-import { useFetch } from "@/libs/api/useFetch";
+import { useFetch } from "@/libs";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { ScrollView } from "react-native";

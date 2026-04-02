@@ -4,7 +4,7 @@ import { AppPrimitive } from "@/components/system-design/presentations/primitive
 import { SearchIcon } from "@/components/system-design/utils";
 import { Config } from "@/constants/Configs";
 import { NamedAPIResource } from "@/data/models";
-import { useFetch } from "@/libs/api/useFetch";
+import { useFetch } from "@/libs";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";

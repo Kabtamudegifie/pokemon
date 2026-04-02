@@ -3,10 +3,8 @@ import { Colors } from "@/constants/Colors";
 import { Config } from "@/constants/Configs";
 import { Layout } from "@/constants/Layout";
 import { NamedAPIResource } from "@/data/models";
-import {
-  PaginatedResponse,
-  useInfiniteFetch,
-} from "@/libs/api/useInfiniteFetch";
+
+import { PaginatedResponse, useInfiniteFetch } from "@/libs";
 import { FlashList } from "@shopify/flash-list";
 import { useRouter } from "expo-router";
 import React, { useCallback } from "react";
