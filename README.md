@@ -56,7 +56,7 @@ This project demonstrates a **production-ready setup** using:
 ## 1. Clone the repository
 
 ```bash
-git clone https://github.com/kabtamu-degifie/pokemon.git
+git clone https://github.com/Kabtamudegifie/pokemon.git
 cd pokemon
 ```
 
