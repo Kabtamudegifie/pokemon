@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { PokemonSearchBar } from "./search";
+import { PokemonSearchBar } from "./components/search";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const GAP = 16;
