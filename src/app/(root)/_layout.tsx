@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Stack, useRouter } from "expo-router";
 import { Image, TouchableOpacity, View } from "react-native";
@@ -21,8 +22,9 @@ export default function RootLayout() {
           headerTransparent: true,
           header: () => (
             <View
-              className="bg-[#1a38b1] relative overflow-hidden flex-row items-center"
+              className="relative overflow-hidden flex-row items-center"
               style={{
+                backgroundColor: Colors.light.primary,
                 paddingTop: insets.top,
                 height: HEADER_TOTAL_HEIGHT,
                 paddingHorizontal: HORIZONTAL_PADDING,

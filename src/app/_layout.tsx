@@ -1,4 +1,3 @@
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import {
   DarkTheme,
   DefaultTheme,
@@ -16,7 +15,9 @@ import "./global.css";
 import { ErrorBoundary } from "@/components/system-design/presentations";
 import { ThemeProvider as UIThemeProvider } from "@/components/system-design/providers/theme";
 import { useColorScheme } from "@/components/system-design/utils";
+import { theme } from "@/constants/Colors";
 import TqProvider from "@/providers/tq";
+import { PaperProvider, Portal } from "react-native-paper";
 
 SplashScreen.preventAutoHideAsync();
 export const unstable_settings = {
@@ -42,16 +43,18 @@ export default function RootLayout() {
     <ErrorBoundary>
       <TqProvider>
         <GestureHandlerRootView style={{ flex: 1 }}>
-          <BottomSheetModalProvider>
-            <UIThemeProvider>
-              <ThemeProvider
-                value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-              >
-                <Slot />
-                <StatusBar style="light" />
-              </ThemeProvider>
-            </UIThemeProvider>
-          </BottomSheetModalProvider>
+          <PaperProvider theme={theme}>
+            <Portal>
+              <UIThemeProvider>
+                <ThemeProvider
+                  value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+                >
+                  <Slot />
+                  <StatusBar style="light" />
+                </ThemeProvider>
+              </UIThemeProvider>
+            </Portal>
+          </PaperProvider>
         </GestureHandlerRootView>
       </TqProvider>
     </ErrorBoundary>

@@ -1,4 +1,13 @@
 import { SafeAreaView } from "@/components/system-design/presentations";
+import { Colors } from "@/constants/Colors";
+import { Config } from "@/constants/Configs";
+import {
+  formatHeight,
+  formatStatName,
+  getStatColor,
+  getTypeColor,
+} from "@/constants/Pokemon";
+
 import { Pokemon } from "@/data/models";
 import { useFetch } from "@/libs/api/useFetch";
 import { useLocalSearchParams } from "expo-router";
@@ -11,59 +20,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Modal, PaperProvider, Portal } from "react-native-paper";
-
-const getTypeColor = (type: string): string => {
-  const colors: Record<string, string> = {
-    grass: "bg-[#78c850]",
-    poison: "bg-[#a040a0]",
-    fire: "bg-[#f08030]",
-    water: "bg-[#6890f0]",
-    bug: "bg-[#a8b820]",
-    normal: "bg-[#a8a878]",
-    electric: "bg-[#f8d030]",
-    ground: "bg-[#e0c068]",
-    fairy: "bg-[#ee99ac]",
-    fighting: "bg-[#c03028]",
-    psychic: "bg-[#f85888]",
-    rock: "bg-[#b8a038]",
-    ghost: "bg-[#705898]",
-    ice: "bg-[#98d8d8]",
-    dragon: "bg-[#7038f8]",
-  };
-  return colors[type.toLowerCase()] || "bg-gray-400";
-};
-
-const getStatColor = (name: string): string => {
-  const colors: Record<string, string> = {
-    hp: "bg-[#4fc1a6]",
-    attack: "bg-[#f7776a]",
-    defense: "bg-[#f8d030]",
-    speed: "bg-[#f7776a]",
-  };
-  return colors[name.toLowerCase()] || "bg-gray-300";
-};
-
-const formatStatName = (name: string): string => {
-  const map: Record<string, string> = {
-    hp: "HP",
-    attack: "Attack",
-    defense: "Defense",
-    speed: "Speed",
-  };
-  return map[name.toLowerCase()] || name;
-};
-
-const formatHeight = (heightDm: number) => {
-  const meters = (heightDm / 10).toFixed(1);
-  const totalInches = Math.round((heightDm / 10) * 39.3701);
-  const feet = Math.floor(totalInches / 12);
-  const inches = totalInches % 12;
-  return {
-    ftIn: `${feet}'${inches.toString().padStart(2, "0")}"`,
-    meters: `${meters} m`,
-  };
-};
+import { Modal, PaperProvider } from "react-native-paper";
 
 export default function PokemonDetail() {
   const { name: pokemonId } = useLocalSearchParams<{ name: string }>();
@@ -71,18 +28,30 @@ export default function PokemonDetail() {
 
   const { data, isLoading, error } = useFetch<Pokemon>(
     ["pokemon", pokemonId],
-    `https://pokeapi.co/api/v2/pokemon/${pokemonId}`,
+    `${Config.api.endpoints.pokemon}/${pokemonId}`,
   );
 
   if (isLoading) {
     return (
-      <View className="flex-1 justify-center items-center bg-[#1a38b1]">
-        <ActivityIndicator size="large" color="white" />
+      <View
+        className="flex-1 justify-center items-center"
+        style={{ backgroundColor: Colors.light.background }}
+      >
+        <ActivityIndicator size="large" color={Colors.light.primary} />
       </View>
     );
   }
 
-  if (error || !data) return null;
+  if (error || !data) {
+    return (
+      <View
+        className="flex-1 justify-center items-center"
+        style={{ backgroundColor: Colors.light.background }}
+      >
+        <Text className="text-red-500 text-lg">Failed to load Pokémon</Text>
+      </View>
+    );
+  }
 
   const formattedId = `#${data.id.toString().padStart(3, "0")}`;
   const height = formatHeight(data.height);
@@ -93,156 +62,240 @@ export default function PokemonDetail() {
     ["hp", "attack", "defense", "speed"].includes(s.stat.name),
   );
 
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
+  const previewMoves = data.moves.slice(0, 6);
+  const totalMoves = data.moves.length;
 
   return (
     <PaperProvider>
-      <SafeAreaView className="flex-1">
+      <SafeAreaView
+        className="flex-1"
+        style={{ backgroundColor: Colors.light.background }}
+        edges={["top", "bottom"]}
+      >
         <ScrollView
-          className="flex-1 px-4 pt-6"
+          className="flex-1 px-5"
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingTop: 24,
+            marginTop: 55,
+            paddingBottom: 40,
+          }}
         >
-          <View className="bg-white rounded-[35px] p-6 mb-4 shadow-xl">
-            <Text className="text-gray-400 font-bold text-lg">
-              {formattedId}
-            </Text>
-            <Text className="text-[#2c3e8c] text-4xl font-extrabold capitalize mt-1 mb-4">
-              {data.name}
+          <View
+            style={{
+              backgroundColor: Colors.light.surface,
+              borderColor: Colors.light.border,
+            }}
+            className="rounded-3xl p-6 mb-6 shadow-xl border"
+          >
+            <View className="flex-row justify-between items-start">
+              <View className="flex-1">
+                <Text className="text-gray-400 font-bold text-lg tracking-widest">
+                  {formattedId}
+                </Text>
+                <Text
+                  style={{ color: Colors.light.text }}
+                  className="text-3xl font-black capitalize mt-1"
+                >
+                  {data.name}
+                </Text>
+              </View>
+
+              <Image
+                source={{
+                  uri:
+                    data.sprites.other?.["official-artwork"]?.front_default ||
+                    data.sprites.front_default ||
+                    "",
+                }}
+                className="w-40 h-40 -mt-4"
+                resizeMode="contain"
+              />
+            </View>
+
+            <View className="flex-row gap-3 mt-6">
+              {data.types.map((t, index) => {
+                const color = getTypeColor(t.type.name);
+                return (
+                  <View
+                    key={index}
+                    className="px-6 py-2 rounded-2xl flex-row items-center gap-2"
+                    style={{ backgroundColor: color }}
+                  >
+                    <View className="w-3 h-3 bg-white/70 rounded-full" />
+                    <Text className="text-white font-bold text-sm uppercase tracking-wider">
+                      {t.type.name}
+                    </Text>
+                  </View>
+                );
+              })}
+            </View>
+
+            <View className="mt-10">
+              <Text className="text-gray-500 font-semibold text-sm mb-5 tracking-widest">
+                BASE STATS
+              </Text>
+              {displayStats.map((stat) => (
+                <View key={stat.stat.name} className="mb-6">
+                  <View className="flex-row justify-between mb-2">
+                    <Text className="font-semibold text-gray-700">
+                      {formatStatName(stat.stat.name)}
+                    </Text>
+                    <Text
+                      style={{ color: Colors.light.text }}
+                      className="font-bold text-lg"
+                    >
+                      {stat.base_stat}
+                    </Text>
+                  </View>
+                  <View className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                    <View
+                      className="h-full rounded-full"
+                      style={{
+                        width: `${Math.min(stat.base_stat, 100)}%`,
+                        backgroundColor: getStatColor(stat.stat.name),
+                      }}
+                    />
+                  </View>
+                </View>
+              ))}
+            </View>
+          </View>
+
+          <View
+            style={{
+              backgroundColor: Colors.light.surface,
+              borderColor: Colors.light.border,
+            }}
+            className="rounded-3xl p-6 mb-6 shadow-xl border"
+          >
+            <Text
+              style={{ color: Colors.light.text }}
+              className="text-2xl font-bold mb-6"
+            >
+              Physical Info
             </Text>
 
-            <View className="flex-row gap-2 mb-8">
-              {data.types.map((t) => (
-                <View
-                  key={t.type.name}
-                  className={`px-5 py-1 rounded-md ${getTypeColor(t.type.name)}`}
+            <View className="flex-row gap-4">
+              <View className="flex-1 bg-gray-50 rounded-2xl p-5">
+                <Text className="text-xs font-bold text-gray-400 mb-3 tracking-widest">
+                  HEIGHT
+                </Text>
+                <Text
+                  style={{ color: Colors.light.text }}
+                  className="text-3xl font-bold"
                 >
-                  <Text className="text-white font-bold text-xs capitalize">
-                    {t.type.name}
+                  {height.ftIn}
+                </Text>
+                <Text className="text-gray-500 text-sm mt-1">
+                  {height.meters}
+                </Text>
+              </View>
+
+              <View className="flex-1 bg-gray-50 rounded-2xl p-5">
+                <Text className="text-xs font-bold text-gray-400 mb-3 tracking-widest">
+                  WEIGHT
+                </Text>
+                <Text
+                  style={{ color: Colors.light.text }}
+                  className="text-3xl font-bold"
+                >
+                  {weightLbs} lbs
+                </Text>
+                <Text className="text-gray-500 text-sm mt-1">
+                  {weightKg} kg
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View
+            style={{
+              backgroundColor: Colors.light.surface,
+              borderColor: Colors.light.border,
+            }}
+            className="rounded-3xl p-6 mb-10 shadow-xl border"
+          >
+            <View className="flex-row justify-between items-center mb-5">
+              <Text
+                style={{ color: Colors.light.text }}
+                className="text-2xl font-bold"
+              >
+                Moves
+              </Text>
+              <Text className="text-gray-500 text-sm">{totalMoves} total</Text>
+            </View>
+
+            <View className="flex-row flex-wrap gap-3 mb-6">
+              {previewMoves.map((move, index) => (
+                <View
+                  key={index}
+                  className="bg-gray-100 px-5 py-3 rounded-2xl border border-gray-200"
+                >
+                  <Text className="text-gray-700 capitalize font-medium">
+                    {move.move.name.replace(/-/g, " ")}
                   </Text>
                 </View>
               ))}
             </View>
 
-            <View className="flex-row items-center justify-between">
-              <View className="flex-1 pr-4">
-                {displayStats.map((s) => (
-                  <View key={s.stat.name} className="mb-4">
-                    <Text className="text-gray-500 font-bold text-xs mb-1">
-                      {formatStatName(s.stat.name)}
-                    </Text>
-                    <View className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-                      <View
-                        className={`h-full ${getStatColor(s.stat.name)}`}
-                        style={{ width: `${Math.min(s.base_stat, 100)}%` }}
-                      />
-                    </View>
-                  </View>
-                ))}
-              </View>
-
-              <View className="flex-1 items-end">
-                <Image
-                  source={{
-                    uri:
-                      (data.sprites.other?.["official-artwork"]
-                        ?.front_default ||
-                        data.sprites.front_default) ??
-                      undefined,
-                  }}
-                  className="w-40 h-40"
-                  resizeMode="contain"
-                />
-              </View>
-            </View>
-          </View>
-
-          <View className="bg-white rounded-[35px] p-6 mb-4 shadow-xl">
-            <Text className="text-xl font-extrabold text-gray-800 mb-5">
-              Breeding
-            </Text>
-            <View className="flex-row justify-between gap-4">
-              <View className="flex-1">
-                <Text className="text-center text-gray-400 font-bold mb-2 uppercase text-[10px] tracking-widest">
-                  Height
+            {totalMoves > 6 && (
+              <TouchableOpacity
+                onPress={() => setVisible(true)}
+                style={{ backgroundColor: Colors.light.primary }}
+                className="py-4 rounded-2xl active:opacity-90"
+              >
+                <Text className="text-white font-bold text-center text-base">
+                  See All {totalMoves} Moves
                 </Text>
-                <View className="bg-gray-50 border border-gray-100 py-4 rounded-2xl items-center">
-                  <Text className="font-bold text-gray-800 text-xl">
-                    {height.ftIn}
-                  </Text>
-                  <Text className="text-gray-400 text-xs mt-0.5">
-                    {height.meters}
-                  </Text>
-                </View>
-              </View>
-              <View className="flex-1">
-                <Text className="text-center text-gray-400 font-bold mb-2 uppercase text-[10px] tracking-widest">
-                  Weight
-                </Text>
-                <View className="bg-gray-50 border border-gray-100 py-4 rounded-2xl items-center">
-                  <Text className="font-bold text-gray-800 text-xl">
-                    {weightLbs} lbs
-                  </Text>
-                  <Text className="text-gray-400 text-xs mt-0.5">
-                    {weightKg} kg
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-
-          <View className="bg-white rounded-[35px] p-6 mb-10 shadow-xl flex-row justify-between items-center">
-            <View>
-              <Text className="text-xl font-extrabold text-gray-800">
-                Moves
-              </Text>
-            </View>
-            <TouchableOpacity
-              onPress={showModal}
-              className="bg-[#212121] px-8 py-3 rounded-full active:opacity-70"
-            >
-              <Text className="text-white font-bold">See all</Text>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            )}
           </View>
         </ScrollView>
 
-        <Portal>
-          <Modal
-            visible={visible}
-            onDismiss={hideModal}
-            contentContainerStyle={{
-              backgroundColor: "white",
-              margin: 20,
-              borderRadius: 30,
-              padding: 20,
-              maxHeight: "80%",
-            }}
+        <Modal
+          visible={visible}
+          onDismiss={() => setVisible(false)}
+          contentContainerStyle={{
+            backgroundColor: Colors.light.surface,
+            margin: 16,
+            borderRadius: 28,
+            padding: 24,
+            maxHeight: "85%",
+          }}
+        >
+          <Text
+            style={{ color: Colors.light.text }}
+            className="text-3xl font-bold mb-6"
           >
-            <Text className="text-2xl font-extrabold text-[#2c3e8c] mb-4">
-              {data.name}&apos;s Moves
+            {data.name}&apos;s Moves
+          </Text>
+
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View className="flex-row flex-wrap gap-3 pb-6">
+              {data.moves.map((move, index) => (
+                <View
+                  key={index}
+                  className="bg-gray-100 px-5 py-3 rounded-2xl border border-gray-200"
+                >
+                  <Text className="text-gray-700 capitalize font-medium">
+                    {move.move.name.replace(/-/g, " ")}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
+
+          <TouchableOpacity
+            onPress={() => setVisible(false)}
+            style={{ backgroundColor: Colors.light.primary }}
+            className="mt-6 py-4 rounded-2xl"
+          >
+            <Text className="text-white font-bold text-center text-lg">
+              Close
             </Text>
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <View className="flex-row flex-wrap gap-2">
-                {data.moves.map((m) => (
-                  <View
-                    key={m.move.name}
-                    className="bg-gray-100 px-3 py-2 rounded-lg border border-gray-200"
-                  >
-                    <Text className="text-gray-700 capitalize font-semibold">
-                      {m.move.name.replace("-", " ")}
-                    </Text>
-                  </View>
-                ))}
-              </View>
-            </ScrollView>
-            <TouchableOpacity
-              onPress={hideModal}
-              className="mt-6 bg-[#212121] py-3 rounded-xl items-center"
-            >
-              <Text className="text-white font-bold">Close</Text>
-            </TouchableOpacity>
-          </Modal>
-        </Portal>
+          </TouchableOpacity>
+        </Modal>
       </SafeAreaView>
     </PaperProvider>
   );

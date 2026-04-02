@@ -1,4 +1,5 @@
 import { SearchIcon } from "@/components/system-design/utils";
+import { Colors } from "@/constants/Colors";
 import { NamedAPIResource } from "@/data/models";
 import { useFetch } from "@/libs/api/useFetch";
 import { useRouter } from "expo-router";
@@ -46,19 +47,12 @@ export function PokemonSearchBar() {
         onSubmitEditing={onSearchHandler}
         mode="outlined"
         dense
-        selectionColor="#000"
-        cursorColor="#000"
+        selectionColor={Colors.light.text}
+        cursorColor={Colors.light.text}
         activeOutlineColor="transparent"
         outlineStyle={{ borderRadius: 999, borderWidth: 0 }}
         style={styles.input}
         contentStyle={styles.inputContent}
-        theme={{
-          colors: {
-            primary: "transparent",
-            background: "white",
-            text: "#000",
-          },
-        }}
       />
 
       <View style={styles.buttonContainer}>
@@ -67,7 +61,7 @@ export function PokemonSearchBar() {
           onPress={onSearchHandler}
           loading={isFetching}
           disabled={isFetching || !searchName.trim()}
-          buttonColor="#000"
+          buttonColor={Colors.light.primary}
           textColor="#fff"
           style={styles.button}
           contentStyle={styles.buttonContent}
@@ -85,8 +79,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "white",
-    borderRadius: 999, // Full pill shape
-    height: 44, // Increased back to 44 for better proportion
+    borderRadius: 999,
+    height: 44,
     paddingLeft: 12,
     paddingRight: 6,
     shadowColor: "#000",
