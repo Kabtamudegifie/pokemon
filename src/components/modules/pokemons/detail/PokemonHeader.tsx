@@ -39,7 +39,7 @@ export default function PokemonHeader() {
         }}
       >
         <Image
-          source={require("../../../assets/images/icon.png")}
+          source={require("../../../../../assets/images/icon.png")}
           className="w-12 h-12 opacity-30 rounded-full"
           style={{ transform: [{ rotate: "-20deg" }] }}
           resizeMode="contain"

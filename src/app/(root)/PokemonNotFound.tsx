@@ -1,3 +1,4 @@
+import { AppButton } from "@/components/system-design/forms/Button";
 import { SafeAreaView } from "@/components/system-design/presentations";
 import {
   ArrowLeftIcon,
@@ -8,7 +9,6 @@ import { Colors } from "@/constants/Colors";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { Button } from "react-native-paper";
 
 export default function PokemonNotFound() {
   const router = useRouter();
@@ -54,31 +54,22 @@ export default function PokemonNotFound() {
         </Text>
       </View>
 
-      <Button
-        mode="contained"
+      <AppButton
         onPress={() => router.replace("/")}
-        buttonColor={Colors.light.primary}
-        textColor="white"
         icon={({ size, color }) => <HomeIcon size={size} color={color} />}
-        contentStyle={styles.primaryButtonContent}
-        labelStyle={styles.primaryButtonLabel}
         style={[styles.primaryButton, styles.shadow]}
-        uppercase={false}
       >
         Back to Pokedex
-      </Button>
+      </AppButton>
 
-      <Button
-        mode="text"
+      <AppButton
+        variant="secondary"
         onPress={() => router.back()}
-        textColor={Colors.light.primary}
         icon={({ size, color }) => <ArrowLeftIcon size={size} color={color} />}
-        labelStyle={styles.secondaryButtonLabel}
         style={styles.secondaryButton}
-        compact
       >
         Try another search
-      </Button>
+      </AppButton>
     </SafeAreaView>
   );
 }
@@ -86,24 +77,9 @@ export default function PokemonNotFound() {
 const styles = StyleSheet.create({
   primaryButton: {
     width: "100%",
-    borderRadius: 16,
-  },
-  primaryButtonContent: {
-    height: 56,
-  },
-  primaryButtonLabel: {
-    fontSize: 17,
-    fontWeight: "800",
-    letterSpacing: 0.5,
   },
   secondaryButton: {
     marginTop: 12,
-    borderRadius: 12,
-  },
-  secondaryButtonLabel: {
-    fontSize: 15,
-    fontWeight: "700",
-    paddingHorizontal: 8,
   },
   shadow: {
     shadowColor: Colors.light.primary,

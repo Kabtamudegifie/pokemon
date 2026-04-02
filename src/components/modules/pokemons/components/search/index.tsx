@@ -1,11 +1,13 @@
+import { AppButton } from "@/components/system-design/forms/Button";
 import { SearchIcon } from "@/components/system-design/utils";
 import { Colors } from "@/constants/Colors";
+import { Config } from "@/constants/Configs";
 import { NamedAPIResource } from "@/data/models";
 import { useFetch } from "@/libs/api/useFetch";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, TextInput } from "react-native-paper";
+import { TextInput } from "react-native-paper";
 
 export function PokemonSearchBar() {
   const router = useRouter();
@@ -13,7 +15,7 @@ export function PokemonSearchBar() {
 
   const { refetch: checkPokemon, isFetching } = useFetch<NamedAPIResource>(
     ["pokemon-check", searchName.toLowerCase().trim()],
-    `https://pokeapi.co/api/v2/pokemon/${searchName.toLowerCase().trim()}`,
+    `${Config.api.endpoints.pokemon}/${searchName.toLowerCase().trim()}`,
     {},
     { enabled: false, retry: false },
   );
@@ -55,21 +57,15 @@ export function PokemonSearchBar() {
         contentStyle={styles.inputContent}
       />
 
-      <View style={styles.buttonContainer}>
-        <Button
-          mode="contained"
-          onPress={onSearchHandler}
-          loading={isFetching}
-          disabled={isFetching || !searchName.trim()}
-          buttonColor={Colors.light.primary}
-          textColor="#fff"
-          style={styles.button}
-          contentStyle={styles.buttonContent}
-          labelStyle={styles.buttonLabel}
-        >
-          {!isFetching && "GO"}
-        </Button>
-      </View>
+      <AppButton
+        size="sm"
+        onPress={onSearchHandler}
+        loading={isFetching}
+        disabled={isFetching || !searchName.trim()}
+        loadingShrink
+      >
+        GO
+      </AppButton>
     </View>
   );
 }
@@ -101,24 +97,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingLeft: 4,
   },
-  buttonContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  button: {
+  searchButton: {
+    height: 32,
     borderRadius: 999,
-    height: 32,
-    minWidth: 0,
-  },
-  buttonContent: {
-    height: 32,
-    paddingHorizontal: 16,
-  },
-  buttonLabel: {
-    fontSize: 11,
-    fontWeight: "700",
-    marginHorizontal: 0,
-    lineHeight: 14,
-    includeFontPadding: false,
   },
 });

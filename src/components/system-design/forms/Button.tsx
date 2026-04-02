@@ -1,102 +1,107 @@
-import { cn } from "@/utils/cn.util";
-import { cva, type VariantProps } from "class-variance-authority";
-import * as React from "react";
-import { Platform, Pressable, type PressableProps } from "react-native";
-import { TextClassContext } from "../utils/text-context";
+import { Colors } from "@/constants/Colors";
+import React from "react";
+import { StyleSheet } from "react-native";
+import { Button, ButtonProps } from "react-native-paper";
 
-const buttonVariants = cva(
-  "web:ring-offset-background web:transition-colors web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2 group flex items-center justify-center rounded-md",
-  {
-    variants: {
-      variant: {
-        default: "web:hover:opacity-90 bg-primary active:opacity-90",
-        destructive: "web:hover:opacity-90 bg-destructive active:opacity-90",
-        outline:
-          "web:hover:bg-accent web:hover:text-accent-foreground border border-input bg-background",
-        secondary: "web:hover:opacity-80 bg-secondary active:opacity-80",
-        ghost: "web:hover:bg-accent web:hover:text-accent-foreground",
-        link: "web:underline-offset-4 web:hover:underline web:focus:underline",
-      },
-      size: {
-        default: "native:h-12 native:px-5 native:py-3 h-10 px-4 py-2",
-        sm: "native:h-10 native:px-4 native:py-2 h-9 rounded-md px-3",
-        lg: "native:h-14 native:px-8 native:py-4 h-11 rounded-md px-8",
-        icon: "native:h-12 native:w-12 h-10 w-10",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
-  },
-);
+type AppButtonProps = ButtonProps & {
+  variant?: "primary" | "secondary";
+  size?: "sm" | "md" | "lg";
+  loadingShrink?: boolean;
+};
 
-const buttonTextVariants = cva("web:transition-colors text-sm font-medium", {
-  variants: {
-    variant: {
-      default: "text-primary-foreground",
-      destructive: "text-destructive-foreground",
-      outline: "group-active:text-accent-foreground text-foreground",
-      secondary: "text-secondary-foreground",
-      ghost: "group-active:text-accent-foreground text-foreground",
-      link: "text-primary group-active:underline",
-    },
-    size: {
-      default: "",
-      sm: "",
-      lg: "native:text-base",
-      icon: "",
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-    size: "default",
-  },
-});
-
-interface ButtonProps
-  extends PressableProps, VariantProps<typeof buttonVariants> {
-  textClass?: string;
-}
-
-const Button = React.forwardRef<
-  React.ElementRef<typeof Pressable>,
-  ButtonProps
->(({ className, textClass, variant, size, ...props }, ref) => {
-  const androidRipple = Platform.select({
-    android: {
-      android_ripple: {
-        color:
-          variant === "destructive"
-            ? "rgba(239, 68, 68, 0.3)"
-            : "rgba(99, 102, 241, 0.3)",
-        borderless: false,
-      },
-    },
-    default: {},
-  });
+export function AppButton({
+  variant = "primary",
+  size = "md",
+  loading,
+  loadingShrink,
+  style,
+  contentStyle,
+  labelStyle,
+  children,
+  ...props
+}: AppButtonProps) {
+  const isPrimary = variant === "primary";
+  const isSmall = size === "sm";
 
   return (
-    <TextClassContext.Provider
-      value={cn(buttonTextVariants({ variant, size }), textClass)}
+    <Button
+      mode={isPrimary ? "contained" : "text"}
+      buttonColor={isPrimary ? Colors.light.primary : "transparent"}
+      textColor={isPrimary ? "#fff" : Colors.light.primary}
+      style={[
+        styles.base,
+        isSmall && styles.small,
+        !isSmall && styles.medium,
+        style,
+      ]}
+      contentStyle={[
+        styles.contentBase,
+        isSmall && styles.contentSmall,
+        !isSmall && styles.contentMedium,
+        loading && loadingShrink && styles.loadingContent,
+        contentStyle,
+      ]}
+      labelStyle={[
+        styles.labelBase,
+        isSmall && styles.labelSmall,
+        !isSmall && styles.labelMedium,
+        loading && loadingShrink && styles.loadingLabel,
+        labelStyle,
+      ]}
+      loading={loading}
+      {...props}
     >
-      <Pressable
-        className={cn(
-          props.disabled && "opacity-50 web:pointer-events-none",
-          buttonVariants({ variant, size, className }),
-        )}
-        ref={ref}
-        role="button"
-        {...androidRipple}
-        style={({ pressed }) => [
-          Platform.OS === "ios" && pressed && { opacity: 0.7 },
-        ]}
-        {...props}
-      />
-    </TextClassContext.Provider>
+      {loading && loadingShrink ? "" : children}
+    </Button>
   );
-});
-Button.displayName = "Button";
+}
 
-export { Button, buttonTextVariants, buttonVariants };
-export type { ButtonProps };
+const styles = StyleSheet.create({
+  base: {
+    borderRadius: 999,
+  },
+
+  small: {
+    height: 32,
+  },
+  medium: {
+    height: 56,
+    borderRadius: 16,
+  },
+
+  contentBase: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  contentSmall: {
+    height: 32,
+    paddingHorizontal: 16,
+  },
+  contentMedium: {
+    height: 56,
+  },
+
+  labelBase: {
+    fontWeight: "700",
+  },
+  labelSmall: {
+    fontSize: 11,
+    lineHeight: 14,
+    marginHorizontal: 0,
+    includeFontPadding: false,
+  },
+  labelMedium: {
+    fontSize: 17,
+    fontWeight: "800",
+    letterSpacing: 0.5,
+  },
+
+  loadingContent: {
+    width: 44,
+    paddingHorizontal: 0,
+  },
+  loadingLabel: {
+    opacity: 0,
+    marginHorizontal: 0,
+  },
+});
