@@ -2,6 +2,7 @@ import { AppButton } from "@/components/system-design/forms/Button";
 import { AppTextInput } from "@/components/system-design/forms/TextInput";
 import { AppPrimitive } from "@/components/system-design/presentations/primitives";
 import { SearchIcon } from "@/components/system-design/utils";
+import { Colors } from "@/constants/Colors";
 import { Config } from "@/constants/Configs";
 import { NamedAPIResource } from "@/data/models";
 import { useFetch } from "@/libs";
@@ -38,7 +39,7 @@ export function PokemonSearchBar() {
   return (
     <AppPrimitive style={styles.container}>
       <AppPrimitive style={styles.iconContainer}>
-        <SearchIcon size={20} className="text-gray-400" />
+        <SearchIcon size={20} color={Colors.light.icon} />
       </AppPrimitive>
 
       <AppTextInput

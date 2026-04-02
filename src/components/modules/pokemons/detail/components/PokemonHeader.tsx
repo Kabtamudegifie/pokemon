@@ -11,7 +11,10 @@ export function PokemonHeader({ data }: { data: Pokemon }) {
 
   return (
     <AppPrimitive
-      style={{ backgroundColor: Colors.light.surface }}
+      style={{
+        backgroundColor: Colors.light.surface,
+        borderColor: Colors.light.border,
+      }}
       className="rounded-2xl flex-row overflow-hidden border border-gray-100 shadow-sm"
     >
       <AppPrimitive className="flex-1 p-4 justify-center">

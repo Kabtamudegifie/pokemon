@@ -8,7 +8,7 @@ import { Pokemon } from "@/data/models";
 import { useFetch } from "@/libs";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, useWindowDimensions } from "react-native";
 import { PokemonHeader } from "./components/PokemonHeader";
 import { PokemonMovesModal } from "./components/PokemonMovesModal";
 import { PokemonMovesPreview } from "./components/PokemonMovesPreview";
@@ -16,6 +16,9 @@ import { PokemonPhysicalInfo } from "./components/PokemonPhysicalInfo";
 import { PokemonStats } from "./components/pokemon-stats";
 
 export function PokemonDetail() {
+  const { width } = useWindowDimensions();
+  const isLandscape = width > 600;
+
   const { name: pokemonId } = useLocalSearchParams<{ name: string }>();
   const [visible, setVisible] = useState(false);
 
@@ -43,18 +46,36 @@ export function PokemonDetail() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingTop: 24,
-          marginTop: 55,
-          paddingBottom: 40,
+          marginTop: isLandscape ? 65 : 68,
+          paddingBottom: isLandscape ? 70 : 10,
         }}
       >
         <AppPrimitive
-          className="w-full flex-col gap-4"
+          className={
+            isLandscape ? "flex-row flex-wrap gap-x-4" : "w-full flex-col gap-4"
+          }
           style={{ backgroundColor: Colors.light.background }}
         >
-          <PokemonHeader data={data} />
-          <PokemonStats data={data} />
-          <PokemonPhysicalInfo data={data} />
-          <PokemonMovesPreview data={data} onSeeAll={() => setVisible(true)} />
+          <AppPrimitive
+            className={
+              isLandscape ? "flex-1 min-w-[45%] gap-4" : "w-full gap-4"
+            }
+          >
+            <PokemonHeader data={data} />
+            <PokemonStats data={data} />
+          </AppPrimitive>
+
+          <AppPrimitive
+            className={
+              isLandscape ? "flex-1 min-w-[45%] gap-4" : "w-full gap-4"
+            }
+          >
+            <PokemonPhysicalInfo data={data} />
+            <PokemonMovesPreview
+              data={data}
+              onSeeAll={() => setVisible(true)}
+            />
+          </AppPrimitive>
 
           <PokemonMovesModal
             visible={visible}

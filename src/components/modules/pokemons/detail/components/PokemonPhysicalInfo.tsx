@@ -15,13 +15,13 @@ export function PokemonPhysicalInfo({ data }: { data: Pokemon }) {
         backgroundColor: Colors.light.surface,
         borderColor: Colors.light.border,
       }}
-      className="rounded-2xl p-4 border shadow-sm"
+      className="rounded-2xl p-6 border shadow-sm"
     >
       <AppPrimitive className="flex-row items-center">
         <AppPrimitive className="flex-1 items-center">
           <AppPrimitive
             as="text"
-            className="text-[10px] font-bold text-gray-400 uppercase mb-1"
+            className="text-[11px] font-bold text-gray-400 uppercase mb-1"
           >
             Height
           </AppPrimitive>
@@ -33,7 +33,7 @@ export function PokemonPhysicalInfo({ data }: { data: Pokemon }) {
             >
               {height.ftIn}
             </AppPrimitive>
-            <AppPrimitive as="text" className="text-[10px] text-gray-500">
+            <AppPrimitive as="text" className="text-[11px] text-gray-500">
               {height.meters}
             </AppPrimitive>
           </AppPrimitive>
@@ -42,7 +42,7 @@ export function PokemonPhysicalInfo({ data }: { data: Pokemon }) {
         <AppPrimitive className="flex-1 items-center">
           <AppPrimitive
             as="text"
-            className="text-[10px] font-bold text-gray-400 uppercase mb-1"
+            className="text-[11px] font-bold text-gray-400 uppercase mb-1"
           >
             Weight
           </AppPrimitive>
@@ -56,11 +56,11 @@ export function PokemonPhysicalInfo({ data }: { data: Pokemon }) {
             </AppPrimitive>
             <AppPrimitive
               as="text"
-              className="text-[10px] text-gray-400 font-bold uppercase"
+              className="text-[11px] text-gray-400 font-bold uppercase"
             >
               lbs
             </AppPrimitive>
-            <AppPrimitive as="text" className="text-[10px] text-gray-500 ml-1">
+            <AppPrimitive as="text" className="text-[11px] text-gray-500 ml-1">
               ({weightKg}kg)
             </AppPrimitive>
           </AppPrimitive>
