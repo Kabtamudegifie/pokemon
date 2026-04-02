@@ -22,6 +22,7 @@ export function AppTextInput({
       selectionColor={Colors.light.text}
       cursorColor={Colors.light.text}
       activeOutlineColor="transparent"
+      placeholderTextColor={Colors.light.placeholder}
       outlineStyle={styles.outline}
       style={[isSmall ? styles.inputSmall : styles.inputMedium, style]}
       contentStyle={[
