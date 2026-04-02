@@ -4,7 +4,7 @@ import {
   useInfiniteFetch,
 } from "@/libs/api/useInfiniteFetch";
 import { FlashList } from "@shopify/flash-list";
-import { useNavigation } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useCallback } from "react";
 import {
   ActivityIndicator,
@@ -21,8 +21,7 @@ const GAP = 16;
 const ITEM_WIDTH = (SCREEN_WIDTH - GAP * 3) / 2;
 
 export default function Pokemons() {
-  const navigation = useNavigation<any>();
-
+  const router = useRouter();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteFetch<PaginatedResponse<NamedAPIResource>>(
       ["pokemon-list"],
@@ -40,7 +39,10 @@ export default function Pokemons() {
       return (
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("PokemonDetail", { name: item.name })
+            router.push({
+              pathname: "/PokemonDetail",
+              params: { name: item.name },
+            })
           }
           activeOpacity={0.9}
           style={{ width: ITEM_WIDTH }}
@@ -72,7 +74,7 @@ export default function Pokemons() {
         </TouchableOpacity>
       );
     },
-    [navigation],
+    [router],
   );
 
   if (isLoading) {
@@ -88,7 +90,14 @@ export default function Pokemons() {
           <Text className="text-white text-3xl font-bold leading-tight">
             Who are you{"\n"}looking for?
           </Text>
-          <View className="w-24 h-24 bg-white/10 rounded-full absolute -right-6 -top-4" />
+
+          <View className="w-24 h-24 bg-white/10 rounded-full absolute -right-6 -top-4">
+            <Image
+              source={require("../../../../assets/images/icon.png")}
+              className="w-24 h-24 rounded-full"
+              resizeMode="contain"
+            />
+          </View>
         </View>
 
         <PokemonSearchBar />

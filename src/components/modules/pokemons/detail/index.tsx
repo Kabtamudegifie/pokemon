@@ -2,7 +2,7 @@ import { SafeAreaView } from "@/components/system-design/presentations";
 import { Pokemon } from "@/data/models";
 import { useFetch } from "@/libs/api/useFetch";
 import { useLocalSearchParams } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import {
   ActivityIndicator,
   Image,
@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Modal, PaperProvider, Portal } from "react-native-paper";
 
 const getTypeColor = (type: string): string => {
   const colors: Record<string, string> = {
@@ -66,6 +67,7 @@ const formatHeight = (heightDm: number) => {
 
 export default function PokemonDetail() {
   const { name: pokemonId } = useLocalSearchParams<{ name: string }>();
+  const [visible, setVisible] = useState(false);
 
   const { data, isLoading, error } = useFetch<Pokemon>(
     ["pokemon", pokemonId],
@@ -91,106 +93,157 @@ export default function PokemonDetail() {
     ["hp", "attack", "defense", "speed"].includes(s.stat.name),
   );
 
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+
   return (
-    <SafeAreaView className="flex-1 bg-[#1a38b1]">
-      <ScrollView
-        className="flex-1 px-4 pt-6"
-        showsVerticalScrollIndicator={false}
-      >
-        <View className="bg-white rounded-[35px] p-6 mb-4 shadow-xl">
-          <Text className="text-gray-400 font-bold text-lg">{formattedId}</Text>
-          <Text className="text-[#2c3e8c] text-4xl font-extrabold capitalize mt-1 mb-4">
-            {data.name}
-          </Text>
+    <PaperProvider>
+      <SafeAreaView className="flex-1">
+        <ScrollView
+          className="flex-1 px-4 pt-6"
+          showsVerticalScrollIndicator={false}
+        >
+          <View className="bg-white rounded-[35px] p-6 mb-4 shadow-xl">
+            <Text className="text-gray-400 font-bold text-lg">
+              {formattedId}
+            </Text>
+            <Text className="text-[#2c3e8c] text-4xl font-extrabold capitalize mt-1 mb-4">
+              {data.name}
+            </Text>
 
-          <View className="flex-row gap-2 mb-8">
-            {data.types.map((t) => (
-              <View
-                key={t.type.name}
-                className={`px-5 py-1 rounded-md ${getTypeColor(t.type.name)}`}
-              >
-                <Text className="text-white font-bold text-xs capitalize">
-                  {t.type.name}
-                </Text>
-              </View>
-            ))}
-          </View>
-
-          <View className="flex-row items-center justify-between">
-            <View className="flex-1 pr-4">
-              {displayStats.map((s) => (
-                <View key={s.stat.name} className="mb-4">
-                  <Text className="text-gray-500 font-bold text-xs mb-1">
-                    {formatStatName(s.stat.name)}
+            <View className="flex-row gap-2 mb-8">
+              {data.types.map((t) => (
+                <View
+                  key={t.type.name}
+                  className={`px-5 py-1 rounded-md ${getTypeColor(t.type.name)}`}
+                >
+                  <Text className="text-white font-bold text-xs capitalize">
+                    {t.type.name}
                   </Text>
-                  <View className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
-                    <View
-                      className={`h-full ${getStatColor(s.stat.name)}`}
-                      style={{ width: `${Math.min(s.base_stat, 100)}%` }}
-                    />
-                  </View>
                 </View>
               ))}
             </View>
 
-            <View className="flex-1 items-end">
-              <Image
-                source={{
-                  uri:
-                    (data.sprites.other?.["official-artwork"]?.front_default ||
-                      data.sprites.front_default) ??
-                    undefined,
-                }}
-                className="w-40 h-40"
-                resizeMode="contain"
-              />
-            </View>
-          </View>
-        </View>
-
-        <View className="bg-white rounded-[35px] p-6 mb-4 shadow-xl">
-          <Text className="text-xl font-extrabold text-gray-800 mb-5">
-            Breeding
-          </Text>
-          <View className="flex-row justify-between gap-4">
-            <View className="flex-1">
-              <Text className="text-center text-gray-400 font-bold mb-2 uppercase text-[10px] tracking-widest">
-                Height
-              </Text>
-              <View className="bg-gray-50 border border-gray-100 py-4 rounded-2xl items-center">
-                <Text className="font-bold text-gray-800 text-xl">
-                  {height.ftIn}
-                </Text>
-                <Text className="text-gray-400 text-xs mt-0.5">
-                  {height.meters}
-                </Text>
+            <View className="flex-row items-center justify-between">
+              <View className="flex-1 pr-4">
+                {displayStats.map((s) => (
+                  <View key={s.stat.name} className="mb-4">
+                    <Text className="text-gray-500 font-bold text-xs mb-1">
+                      {formatStatName(s.stat.name)}
+                    </Text>
+                    <View className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+                      <View
+                        className={`h-full ${getStatColor(s.stat.name)}`}
+                        style={{ width: `${Math.min(s.base_stat, 100)}%` }}
+                      />
+                    </View>
+                  </View>
+                ))}
               </View>
-            </View>
-            <View className="flex-1">
-              <Text className="text-center text-gray-400 font-bold mb-2 uppercase text-[10px] tracking-widest">
-                Weight
-              </Text>
-              <View className="bg-gray-50 border border-gray-100 py-4 rounded-2xl items-center">
-                <Text className="font-bold text-gray-800 text-xl">
-                  {weightLbs} lbs
-                </Text>
-                <Text className="text-gray-400 text-xs mt-0.5">
-                  {weightKg} kg
-                </Text>
+
+              <View className="flex-1 items-end">
+                <Image
+                  source={{
+                    uri:
+                      (data.sprites.other?.["official-artwork"]
+                        ?.front_default ||
+                        data.sprites.front_default) ??
+                      undefined,
+                  }}
+                  className="w-40 h-40"
+                  resizeMode="contain"
+                />
               </View>
             </View>
           </View>
-        </View>
 
-        <View className="bg-white rounded-[35px] p-6 mb-10 shadow-xl flex-row justify-between items-center">
-          <View>
-            <Text className="text-xl font-extrabold text-gray-800">Moves</Text>
+          <View className="bg-white rounded-[35px] p-6 mb-4 shadow-xl">
+            <Text className="text-xl font-extrabold text-gray-800 mb-5">
+              Breeding
+            </Text>
+            <View className="flex-row justify-between gap-4">
+              <View className="flex-1">
+                <Text className="text-center text-gray-400 font-bold mb-2 uppercase text-[10px] tracking-widest">
+                  Height
+                </Text>
+                <View className="bg-gray-50 border border-gray-100 py-4 rounded-2xl items-center">
+                  <Text className="font-bold text-gray-800 text-xl">
+                    {height.ftIn}
+                  </Text>
+                  <Text className="text-gray-400 text-xs mt-0.5">
+                    {height.meters}
+                  </Text>
+                </View>
+              </View>
+              <View className="flex-1">
+                <Text className="text-center text-gray-400 font-bold mb-2 uppercase text-[10px] tracking-widest">
+                  Weight
+                </Text>
+                <View className="bg-gray-50 border border-gray-100 py-4 rounded-2xl items-center">
+                  <Text className="font-bold text-gray-800 text-xl">
+                    {weightLbs} lbs
+                  </Text>
+                  <Text className="text-gray-400 text-xs mt-0.5">
+                    {weightKg} kg
+                  </Text>
+                </View>
+              </View>
+            </View>
           </View>
-          <TouchableOpacity className="bg-[#212121] px-8 py-3 rounded-full">
-            <Text className="text-white font-bold">See all</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+
+          <View className="bg-white rounded-[35px] p-6 mb-10 shadow-xl flex-row justify-between items-center">
+            <View>
+              <Text className="text-xl font-extrabold text-gray-800">
+                Moves
+              </Text>
+            </View>
+            <TouchableOpacity
+              onPress={showModal}
+              className="bg-[#212121] px-8 py-3 rounded-full active:opacity-70"
+            >
+              <Text className="text-white font-bold">See all</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+
+        <Portal>
+          <Modal
+            visible={visible}
+            onDismiss={hideModal}
+            contentContainerStyle={{
+              backgroundColor: "white",
+              margin: 20,
+              borderRadius: 30,
+              padding: 20,
+              maxHeight: "80%",
+            }}
+          >
+            <Text className="text-2xl font-extrabold text-[#2c3e8c] mb-4">
+              {data.name}&apos;s Moves
+            </Text>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View className="flex-row flex-wrap gap-2">
+                {data.moves.map((m) => (
+                  <View
+                    key={m.move.name}
+                    className="bg-gray-100 px-3 py-2 rounded-lg border border-gray-200"
+                  >
+                    <Text className="text-gray-700 capitalize font-semibold">
+                      {m.move.name.replace("-", " ")}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            </ScrollView>
+            <TouchableOpacity
+              onPress={hideModal}
+              className="mt-6 bg-[#212121] py-3 rounded-xl items-center"
+            >
+              <Text className="text-white font-bold">Close</Text>
+            </TouchableOpacity>
+          </Modal>
+        </Portal>
+      </SafeAreaView>
+    </PaperProvider>
   );
 }
