@@ -37,11 +37,11 @@ This project demonstrates a **production-ready mobile setup** with best practice
 .
 ├── src/
 │   ├── app/          # Screens (Expo Router)
-│   ├── components/   # Reusable UI components
+│   ├── components/   # Modules and Reusable UI components
 │   ├── constants/    # App constants
-│   ├── data/         # Static/mock data
+│   ├── data/         # Types / models / DTOs
 │   ├── hooks/        # Custom hooks
-│   ├── libs/         # External integrations
+│   ├── libs/         # API logic (React Query, fetch, etc.)
 │   ├── providers/    # Context providers
 │   └── utils/        # Utility functions
 │
