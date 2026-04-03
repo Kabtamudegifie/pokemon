@@ -4,7 +4,6 @@ import { AppPrimitive } from "@/components/system-design/presentations/primitive
 import {
   ArrowLeftIcon,
   HelpCircleIcon,
-  HomeIcon,
 } from "@/components/system-design/utils";
 import { Colors } from "@/constants/Colors";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -20,7 +19,7 @@ export default function PokemonNotFound() {
       style={{ backgroundColor: Colors.light.background }}
       className="flex-1 justify-center items-center px-10"
     >
-      <AppPrimitive className="items-center mb-10">
+      <AppPrimitive className="items-center mb-4">
         <AppPrimitive
           className="w-40 h-40 rounded-full justify-center items-center mb-6"
           style={{ backgroundColor: Colors.light.surface, elevation: 4 }}
@@ -61,14 +60,6 @@ export default function PokemonNotFound() {
           </AppPrimitive>
         </AppPrimitive>
       </AppPrimitive>
-
-      <AppButton
-        onPress={() => router.replace("/")}
-        icon={({ size, color }) => <HomeIcon size={size} color={color} />}
-        style={[styles.primaryButton, styles.shadow]}
-      >
-        Back to Pokedex
-      </AppButton>
 
       <AppButton
         variant="secondary"
