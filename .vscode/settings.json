@@ -4,5 +4,12 @@
     "source.organizeImports": "explicit",
     "source.sortMembers": "explicit"
   },
-  "cSpell.words": ["Kabtamu", "nativewind", "Pikachu", "Pokemons"]
+  "cSpell.words": [
+    "Kabtamu",
+    "nativewind",
+    "netinfo",
+    "Pikachu",
+    "Pokemons",
+    "worklets"
+  ]
 }
