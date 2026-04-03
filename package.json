@@ -13,13 +13,20 @@
   },
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "lint": "expo lint",
     "dev": "expo start --clear",
-    "build:ios": "eas build --platform ios",
-    "build:android": "eas build --platform android",
-    "build:all": "eas build --platform all"
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "lint": "expo lint",
+    "typecheck": "tsc --noEmit",
+    "build:android:dev": "eas build --profile development --platform android",
+    "build:android:staging": "eas build --profile staging --platform android",
+    "build:android:prod": "eas build --profile production --platform android",
+    "build:ios:dev": "eas build --profile development --platform ios",
+    "build:ios:staging": "eas build --profile staging --platform ios",
+    "build:ios:prod": "eas build --profile production --platform ios",
+    "update:staging": "eas update --channel staging",
+    "update:prod": "eas update --channel production",
+    "preview": "expo start --no-dev --minify"
   },
   "dependencies": {
     "@expo/config": "~12.0.12",

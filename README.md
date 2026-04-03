@@ -1,15 +1,8 @@
 # 📱 Pokemon App
 
-A modern **React Native + Expo (SDK 54)** application built with performance, scalability, and clean architecture.
+A modern **React Native + Expo (SDK 54)** application built with a focus on performance, scalability, and clean architecture.
 
-This project demonstrates a **production-ready setup** using:
-
-- ⚡ Expo Router (file-based navigation)
-- 🎨 NativeWind (Tailwind CSS for React Native)
-- 🧠 React Query (data fetching & caching)
-- 🧩 Modular folder structure (`src/` based)
-- 🚀 EAS Build + OTA Updates
-- 📦 Yarn Workspaces ready
+This project demonstrates a **production-ready mobile setup** with best practices for development, state management, and deployment.
 
 ---
 
@@ -18,11 +11,23 @@ This project demonstrates a **production-ready setup** using:
 - Expo SDK 54
 - React Native 0.81
 - React 19
-- Expo Router
-- NativeWind
+- Expo Router (file-based navigation)
+- NativeWind (Tailwind CSS for React Native)
 - React Native Paper
-- TanStack React Query
-- FlashList
+- TanStack React Query (data fetching & caching)
+- FlashList (high-performance lists)
+
+---
+
+# ✨ Features
+
+- ⚡ File-based navigation with Expo Router
+- 🎨 Utility-first styling using NativeWind
+- 🧠 Efficient server-state management with React Query
+- 📦 Scalable `src/`-based architecture
+- 🚀 EAS Build for CI/CD
+- 🔄 OTA updates with EAS Update
+- 📱 Optimized performance using FlashList
 
 ---
 
@@ -31,14 +36,14 @@ This project demonstrates a **production-ready setup** using:
 ```
 .
 ├── src/
-│   ├── app/
-│   ├── components/
-│   ├── constants/
-│   ├── data/
-│   ├── hooks/
-│   ├── libs/
-│   ├── providers/
-│   └── utils/
+│   ├── app/          # Screens (Expo Router)
+│   ├── components/   # Reusable UI components
+│   ├── constants/    # App constants
+│   ├── data/         # Static/mock data
+│   ├── hooks/        # Custom hooks
+│   ├── libs/         # External integrations
+│   ├── providers/    # Context providers
+│   └── utils/        # Utility functions
 │
 ├── assets/
 ├── app.config.ts
@@ -66,25 +71,50 @@ cd pokemon
 yarn install
 ```
 
-## 3. Start the app
+## 3. Start the development server
 
 ```bash
 yarn start
 ```
 
-Run on device:
+---
+
+# 📱 Running the App
+
+### Android
 
 ```bash
 yarn android
+```
+
+### iOS
+
+```bash
 yarn ios
 ```
+
+> Ensure you have an emulator running or a physical device connected.
 
 ---
 
 # 🧪 Development
 
+### Start with clean cache
+
 ```bash
 yarn dev
+```
+
+### Lint the project
+
+```bash
+yarn lint
+```
+
+### Type checking
+
+```bash
+yarn typecheck
 ```
 
 ---
@@ -97,31 +127,74 @@ yarn dev
 npx expo login
 ```
 
-## Development build
+---
+
+## 📦 Android Builds
+
+### Development
 
 ```bash
-yarn eas build --profile development --platform android
+yarn build:android:dev
 ```
 
-## Staging build
+### Staging
 
 ```bash
-yarn eas build --profile staging --platform android
+yarn build:android:staging
 ```
 
-## Production build
+### Production
 
 ```bash
-yarn eas build --profile production --platform android
+yarn build:android:prod
+```
+
+---
+
+## 🍏 iOS Builds
+
+### Development
+
+```bash
+yarn build:ios:dev
+```
+
+### Staging
+
+```bash
+yarn build:ios:staging
+```
+
+### Production
+
+```bash
+yarn build:ios:prod
 ```
 
 ---
 
 # 🔄 OTA Updates
 
+### Staging
+
 ```bash
-yarn eas update --channel staging
-yarn eas update --channel production
+yarn update:staging
+```
+
+### Production
+
+```bash
+yarn update:prod
+```
+
+---
+
+# 🚀 Preview Production Bundle
+
+Run the app in a production-like mode:
+
+```bash
+yarn preview
 ```
 
 ---
@@ -136,12 +209,21 @@ yarn eas update --channel production
 
 ---
 
+# 🧠 Architecture Notes
+
+- Modular structure using `src/` for scalability
+- Separation of concerns (UI, logic, data)
+- React Query handles async state and caching
+- Designed for easy extension and team collaboration
+
+---
+
 # 👨‍💻 Author
 
-Kabtamu D
+**Kabtamu D**
 
 ---
 
 # 📄 License
 
-None
+This project is not licensed.
